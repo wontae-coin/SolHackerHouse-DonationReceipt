@@ -3,9 +3,8 @@ import { dummyPictures } from "../constants";
 function Show() {
     return (
         <div>
-            {dummyPictures.map( (dummyPicture, index) => (
-                <img key={index} src={dummyPicture.image} alt={dummyPicture.name}/>
-            ))}
+            {/* 하나 방금 만들었으니 하나만 보여주는 로직 */}
+            <img src={dummyPictures[0].image} alt={dummyPictures[0].name}/>
         </div>
     );
 }

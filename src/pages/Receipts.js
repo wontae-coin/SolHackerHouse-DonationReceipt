@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 
+import { dummyPictures } from "../constants";
+
+
 function Receipts() {
     const location = useLocation();
     const [tokens, setTokens] = useState([]);
-    const [isRightAddress, setIsRightAddress] = useState(true);
-
 
     useEffect( () => {
         let walletPubkey = location.pathname.split('/')[2];
@@ -26,10 +27,13 @@ function Receipts() {
 
     return (
         <div>
-            { isRightAddress && tokens.map( (token,index) => (
+            {/* { tokens.map( (token,index) => (
                 <div key={index}>
                     {token}
                 </div>
+            ))} */}
+            {dummyPictures.map( (dummyPicture, index) => (
+                <img key={index} src={dummyPicture.image} alt={dummyPicture.name}/>
             ))}
         </div>
     );
