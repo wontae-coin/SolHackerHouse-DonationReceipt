@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/mint-nft/node_modules
+node_modules
 
 # testing
 /coverage
