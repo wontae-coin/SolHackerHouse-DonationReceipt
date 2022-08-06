@@ -3,7 +3,7 @@ import { Button, TextField } from "@mui/material";
 import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import "../static/css/main.css";
-import { useGetTokens } from "../hooks";
+import { useGetNftUris } from "../hooks";
 import * as PIXI from "https://cdn.skypack.dev/pixi.js";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur";
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
@@ -243,7 +243,7 @@ function Main() {
         setAddress(address);
     } 
 
-    const [ getTokens, tokens ] = useGetTokens(address);
+    const [ getNftUris, nftUris ] = useGetNftUris(address);
 
     return (
         <div>
@@ -271,7 +271,7 @@ function Main() {
                 </div>
                 <div className="overlay__btns">
                 <button className="overlay__btn overlay__btn--transparent"
-                        onClick={getTokens}>
+                        onClick={getNftUris}>
                     Search
                 </button>
                 </div>
