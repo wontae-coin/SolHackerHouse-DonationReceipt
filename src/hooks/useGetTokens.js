@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
+import {Alert} from '@mui/material';
 
 function useGetTokens(walletPubkey) {
     const [tokens, setTokens] = useState([]);
@@ -14,6 +15,11 @@ function useGetTokens(walletPubkey) {
         ))
 
         setTokens(tokens);
+        // 토큰 확인 부분 차후 삭제 필요
+        alert(tokens);
+        console.log('Received tokens : ', tokens);
+        //
+        
     }
     return [getTokens, tokens]
 }

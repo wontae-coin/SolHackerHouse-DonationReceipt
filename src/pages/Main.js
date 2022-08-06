@@ -274,10 +274,6 @@ function Main() {
                         onClick={getTokens}>
                     Search
                 </button>
-                <div>
-                    {/* 여기에 페이지 넘어가면서 카드 나오게끔 */}
-                    {tokens}
-                </div>
                 </div>
             </div>
             </div>
