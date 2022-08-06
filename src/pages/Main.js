@@ -1,9 +1,7 @@
-import React, {useState, useEffect, useRef} from "react";
-import { Button, TextField } from "@mui/material";
-import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import React, {useState, useEffect, useRef, createContext } from "react";
+import { Link } from "react-router-dom";
+import { TextField } from "@mui/material";
 import "../static/css/main.css";
-import { useGetTokens } from "../hooks";
 import * as PIXI from "https://cdn.skypack.dev/pixi.js";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur";
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
@@ -236,15 +234,14 @@ function Main() {
         //                             });
         //                     });
     }, []);
-
-    const [address, setAddress] = useState("Hdcogqc4mxkKRrEA7oUqu25bwWgwNeYjGy5BibXuj6Eg");
+    // Hdcogqc4mxkKRrEA7oUqu25bwWgwNeYjGy5BibXuj6Eg
+    const [address, setAddress] = useState("");
     const detectAddress = e => {
         const address = e.target.value;
         setAddress(address);
     } 
-
-    const [ getTokens, tokens ] = useGetTokens(address);
-
+   
+    
     return (
         <div>
             <div ref={ref} className="orb-canvas"/>
@@ -270,13 +267,18 @@ function Main() {
                              />
                 </div>
                 <div className="overlay__btns">
-                <button className="overlay__btn overlay__btn--transparent"
-                        onClick={getTokens}>
-                    Search
-                </button>
+                <Link to={{
+                    pathname: `/receipts/${address}`,
+                    state: {
+                        address
+                    }
+                }}>
+                    <button className="overlay__btn overlay__btn--transparent">
+                        Search
+                    </button>
+                </Link>
                 <div>
                     {/* 여기에 페이지 넘어가면서 카드 나오게끔 */}
-                    {tokens}
                 </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
-import { Header, Footer, Navigator } from './Layout'; 
+import { Header } from './Header'; 
+import { Footer } from './Footer'; 
 
 function CommonLayout({children}) {
     return (
