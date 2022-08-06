@@ -300,7 +300,8 @@ function Main() {
                       <div className="cards__wrapper">
                           <div className="card current--card">
                               <div className="card__image">
-                                  <img src="https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs" alt="" />
+                                  {/* <img src="https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs" alt="" /> */}
+                                  <img src={ntfUris[0]} alt="" />
                                   
                               </div>
                           </div>

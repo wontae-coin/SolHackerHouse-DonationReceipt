@@ -14,6 +14,7 @@ function useGetNftUris(walletPubkey) {
         const connection = new Connection(clusterApiUrl("mainnet-beta"), 'confirmed');
         const response = await connection.getTokenAccountsByOwner(walletToQuery, { programId: SPLToken.TOKEN_PROGRAM_ID});
 
+        let l_nftUris = [];
         for (const token of response.value) {
             try{
                 let accountInfo = SPLToken.AccountLayout.decode(token.account.data);
@@ -22,11 +23,15 @@ function useGetNftUris(walletPubkey) {
                 console.log(tokenmeta.data.data.uri);
                 let res = await axios.get(tokenmeta.data.data.uri);
                 console.log(res.data.properties.files[0].uri);
+                if (res.data.properties.files[0].uri){
+                    l_nftUris.push(res.data.properties.files[0].uri);
+                }
             }catch (err){
                 console.log(err);
 
             }
         }
+        setNftUris(l_nftUris);
     }
     return [getNftUris, nftUris]
 }
