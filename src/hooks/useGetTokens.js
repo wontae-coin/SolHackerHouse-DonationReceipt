@@ -16,7 +16,7 @@ function useGetTokens(walletPubkey) {
 
         setTokens(tokens);
         // 토큰 확인 부분 차후 삭제 필요
-        alert(tokens);
+        // alert(tokens);
         console.log('Received tokens : ', tokens);
         //
         

@@ -27,7 +27,6 @@ function useGetNftUris(walletPubkey) {
 
             }
         }
-
     }
     return [getNftUris, nftUris]
 }
