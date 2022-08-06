@@ -183,8 +183,6 @@ class Orb {
 };
 
 function Main() {
-    let url = "";
-    // Hdcogqc4mxkKRrEA7oUqu25bwWgwNeYjGy5BibXuj6Eg
     const ref = useRef(null);
 
     // Create PixiJS app
@@ -239,7 +237,7 @@ function Main() {
         //                     });
     }, []);
 
-    const [address, setAddress] = useState("");
+    const [address, setAddress] = useState("Hdcogqc4mxkKRrEA7oUqu25bwWgwNeYjGy5BibXuj6Eg");
     const detectAddress = e => {
         const address = e.target.value;
         setAddress(address);
