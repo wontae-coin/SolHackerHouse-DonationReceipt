@@ -5,12 +5,16 @@ import { MintNft } from "../target/types/mint_nft";
 
 describe("nft-marketplace", async () => {
   
-  const testNftTitle = "Donate NFT2!";
-  const testNftSymbol = "DoNFT2";
-  const testNftUri = "https://raw.githubusercontent.com/Coding-and-Crypto/Solana-NFT-Marketplace/master/assets/example.json";
-  //https://drive.google.com/file/d/18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs/view?usp=sharing
-  //"https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/640px-SpongeBob_SquarePants_character.svg.png"
-
+  const testNftTitle = "Donate NFT2";
+  const testNftSymbol = "DONFT";
+  const testNftUri = "https://raw.githubusercontent.com/kyarate/test/main/example2.json";
+  
+  // const testNftUri = "https://raw.githubusercontent.com/Coding-and-Crypto/Solana-NFT-Marketplace/master/assets/example.json";
+  // https://drive.google.com/file/d/18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs/view?usp=sharing
+  // "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/640px-SpongeBob_SquarePants_character.svg.png"
+  // wallet = "/Users/hongjoon/.config/solana/id.json"
+  // wallet = "/Users/hongjoon/.config/solana/mainp1.json"
+  
   const provider = anchor.AnchorProvider.env()
   const wallet = provider.wallet as anchor.Wallet;
   anchor.setProvider(provider);
