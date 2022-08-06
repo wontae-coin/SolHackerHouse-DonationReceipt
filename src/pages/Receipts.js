@@ -5,6 +5,9 @@ import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 function Receipts() {
     const location = useLocation();
     const [tokens, setTokens] = useState([]);
+    const [isRightAddress, setIsRightAddress] = useState(true);
+
+
     useEffect( () => {
         let walletPubkey = location.pathname.split('/')[2];
         const walletToQuery = new PublicKey(walletPubkey);
@@ -23,7 +26,7 @@ function Receipts() {
 
     return (
         <div>
-            {tokens.map( (token,index) => (
+            { isRightAddress && tokens.map( (token,index) => (
                 <div key={index}>
                     {token}
                 </div>

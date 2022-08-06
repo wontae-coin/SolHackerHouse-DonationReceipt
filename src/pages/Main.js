@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, createContext } from "react";
+import React, {useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { TextField } from "@mui/material";
 import "../static/css/main.css";
@@ -245,43 +245,37 @@ function Main() {
     return (
         <div>
             <div ref={ref} className="orb-canvas"/>
-            <div className="overlay">
-            <div className="overlay__inner">
-                <h1 className="overlay__title">
-                When we give cheerfully and accept gratefully, 
-                <span className="text-gradient">everyone is blessed</span>.
-                </h1>
-                <h3 className="overlay__speaker">- Maya Angelou -</h3>
-                <p className="overlay__description">
-                {/* <strong>Put your address</strong> */}
-                </p>
-                <div className="overlay__input">
-                <TextField onChange={detectAddress}
-                            name="address" 
-                            value={address} 
-                            placeholder="Put your address" 
-                            variant="outlined"
-                            size="small"
-                            fullWidth={true}
-                            color="primary"
-                             />
+                <div className="overlay">
+                <div className="overlay__inner">
+                    <h1 className="overlay__title">
+                    When we give cheerfully and accept gratefully, 
+                    <span className="text-gradient">{"\u00A0"}everyone is blessed</span>.
+                    </h1>
+                    <h3 className="overlay__speaker">- Maya Angelou -</h3>
+                    <p className="overlay__description">
+                    {/* <strong>Put your address</strong> */}
+                    </p>
+                    <div className="overlay__input">
+                    <TextField onChange={detectAddress}
+                                name="address" 
+                                value={address} 
+                                placeholder="Put your address" 
+                                variant="outlined"
+                                size="small"
+                                fullWidth={true}
+                                color="primary"
+                                />
+                    </div>
+                    <div className="overlay__btns">
+                        <Link to={{
+                            pathname: `/receipts/${address}`,
+                        }}>
+                            <button className="overlay__btn overlay__btn--transparent">
+                                Search
+                            </button>
+                        </Link>
+                    </div>
                 </div>
-                <div className="overlay__btns">
-                <Link to={{
-                    pathname: `/receipts/${address}`,
-                    state: {
-                        address
-                    }
-                }}>
-                    <button className="overlay__btn overlay__btn--transparent">
-                        Search
-                    </button>
-                </Link>
-                <div>
-                    {/* 여기에 페이지 넘어가면서 카드 나오게끔 */}
-                </div>
-                </div>
-            </div>
             </div>
         </div>
     );

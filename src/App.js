@@ -11,7 +11,7 @@ function App() {
           <Route path="/" exact={true} element={<Main />} />
           <Route path="receipts/:address" element={<Receipts />} />
           <Route path="/mint" element={<Mint />} />
-          <Route path="/show/:nftaddress" element={<Show />} />
+          <Route path="/show" element={<Show />} />
           <Route path={"*"} element={<Error404 />}/>
         </Routes>
       </CommonLayout> 
