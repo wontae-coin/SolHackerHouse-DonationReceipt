@@ -7,6 +7,8 @@
 /mint-nft/node_modules
 node_modules
 
+/mint-nft/target
+
 # testing
 /coverage
 

@@ -1,0 +1,10 @@
+{
+    "name": "Donate NFT2",
+    "symbol": "DONFT2",
+    "description": "Let's Donate NFT Test",
+    "seller_fee_basis_points": 5,
+    "external_url": "",
+    "edition": "",
+    "background_color": "000000",
+    "image": "https://drive.google.com/file/d/1yfcQnqz-HfWVKFE5wR_Hv-kYQejLyOp4/view?usp=sharing"
+}
