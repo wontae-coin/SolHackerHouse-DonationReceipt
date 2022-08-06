@@ -9,6 +9,9 @@ import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-bl
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
 import hsl from "https://cdn.skypack.dev/hsl-to-hex";
 import debounce from "https://cdn.skypack.dev/debounce";
+import zIndex from "@mui/material/styles/zIndex";
+// import ImageGallery from "react-image-gallery";
+
 
 // return a random number within a range
 function random(min, max) {
@@ -183,47 +186,133 @@ class Orb {
 
 function Main() {
     const ref = useRef(null);
-    const [show, setShow] = useState('none');
+    // const btn_left = useRef(null);
+    // const btn_right = useRef(null);
+    // const current_card = useRef(null);
+    // const previous_card = useRef(null);
+    // const next_card = useRef(null);
+    // const current_image = useRef(null);
+    // const previous_image = useRef(null);
+    // const next_image = useRef(null);
+    // const current_info = useRef(null);
+    // const previous_info = useRef(null);
+    // const next_info = useRef(null);
+    // const texts = useRef(null);
 
-    // Create PixiJS app
-    const app = new PIXI.Application({
+
+    const [show, setShow] = useState('none');
+    const [receipts, setReceipts] = useState([]);
+    const [address, setAddress] = useState("");
+
+    const [currentCard, setCurrentCard] = useState("id_card_current");
+    const [nextCard, setNextCard] = useState("id_card_next");
+    const [previousCard, setPreviousCard] = useState("id_card_previous");
+
+    const [currentInfo, setCurrentInfo] = useState("id_info_current");
+    const [nextInfo, setNextInfo] = useState("id_info_next");
+    const [previousInfo, setPreviousInfo] = useState("id_info_previous");
+
+
+    const [count, setCount] = useState(0);
+    
+    const submit_btn_onClick = () =>{
+
+      document.getElementById("id_overlay").className = "overlay zoom-in"
+      document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
+      document.getElementById("id_card_app").className = "app fade-in"
+      document.getElementById("id_back_button").className = "back-button fade-in"
+      setShow('');
+      // document.getElementById("id_overlay__btn").className = "overlay__btn overlay__btn--transparent disable-object"
+      // getTokens();
+      console.log('address', address);
+    }
+
+    const onClick_back_button = () => {
+
+      document.getElementById("id_overlay").className = "overlay zoom-out"
+      document.getElementById("id_overlay__inner").className = "overlay__inner fade-in"
+      document.getElementById("id_card_app").className = "app fade-out"
+      document.getElementById("id_back_button").className = "back-button fade-out"
+      setShow('none');
+    }
+
+    const onClick_btn_slider = (direction) => {
+      if(direction === "left"){
+        
+        console.log('left!');
+
+        document.getElementById("id_card_current").style.zIndex = 100
+        document.getElementById("id_card_next").style.zIndex = 50
+        document.getElementById("id_card_previous").style.zIndex = 10
+
+        document.getElementById("id_card_current").className = "card previous--card";
+        document.getElementById("id_card_next").className = "card current--card";
+        document.getElementById("id_card_previous").className = "card next--card";
+
+        document.getElementById("id_info_current").className = "info previous--info"
+        document.getElementById("id_info_next").className = "info current--info"
+        document.getElementById("id_info_previous").className = "info next--info"
+
+        switch(count%3){
+          case 0:
+            setCurrentCard("id_card_previous");
+            setPreviousCard("id_card_next");
+            setNextCard("id_card_current");
+
+            setCurrentInfo("id_info_previous");
+            setPreviousInfo("id_info_next");
+            setNextInfo("id_info_current");
+            break;
+          case 1:
+
+            setCurrentCard("id_card_next");
+            setPreviousCard("id_card_current");
+            setNextCard("id_card_previous");
+
+            setCurrentInfo("id_info_next");
+            setPreviousInfo("id_info_current");
+            setNextInfo("id_info_previous");
+
+            break;
+          case 2:
+
+            setCurrentCard("id_card_current");
+            setPreviousCard("id_card_previous");
+            setNextCard("id_card_next");
+
+            setCurrentInfo("id_info_current");
+            setPreviousInfo("id_info_previous");
+            setNextInfo("id_info_next");
+            break;
+        }
+      }
+
+      setCount(count + 1);
+    }
+
+    useEffect(()=>{
+
+      // Create PixiJS app
+      const app = new PIXI.Application({
         // render to <canvas className="orb-canvas"></canvas>
         // view: document.querySelector(".orb-canvas"),
         // auto adjust size to fit the current window
         resizeTo: window,
         // transparent background, we will be creating a gradient background later using CSS
         transparent: true
-    });
+      });
     
-    // Create colour palette
-    const colorPalette = new ColorPalette();
-    app.stage.filters = [new KawaseBlurFilter(30, 10, true)];
-    // Create orbs
-    const orbs = [];
+      // Create colour palette
+      const colorPalette = new ColorPalette();
+      app.stage.filters = [new KawaseBlurFilter(30, 10, true)];
+      // Create orbs
+      const orbs = [];
 
-    for (let i = 0; i < 10; i++) {
-        const orb = new Orb(colorPalette.randomColor());
-        app.stage.addChild(orb.graphics);
-        orbs.push(orb);
-    }
-    
-    const [address, setAddress] = useState("Hdcogqc4mxkKRrEA7oUqu25bwWgwNeYjGy5BibXuj6Eg");
-    const detectAddress = e => {
-        const address = e.target.value;
-        setAddress(address);
-    } 
-    const [ getTokens, tokens ] = useGetTokens(address);
-    
-    const submit_btn_onClick = () =>{
-      document.getElementById("id_overlay").className = "overlay zoom-in"
-      document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
-      document.getElementById("id_card_app").className = "app fade-in"
-      setShow('');
-      // document.getElementById("id_overlay__btn").className = "overlay__btn overlay__btn--transparent disable-object"
-      getTokens();
-    }
-
-    useEffect(()=>{
+      for (let i = 0; i < 10; i++) {
+          const orb = new Orb(colorPalette.randomColor());
+          app.stage.addChild(orb.graphics);
+          orbs.push(orb);
+      }
 
       ref.current.appendChild(app.view);
       
@@ -241,8 +330,6 @@ function Main() {
           });
       }
 
-      app.start();
-  
       // document.querySelector(".overlay__btn--colors")
       //         .addEventListener("click", () => {
       //                             colorPalette.setColors();
@@ -268,9 +355,10 @@ function Main() {
                   {/* <strong>Put your address</strong> */}
                   </p>
                   <div className="overlay__input">
-                  <TextField onChange={detectAddress}
+                  <TextField onChange={(val) =>{
+                              setAddress(val.target.value);
+                              }}
                               name="address" 
-                              value={address} 
                               placeholder="Put your address" 
                               variant="outlined"
                               size="small"
@@ -290,7 +378,7 @@ function Main() {
           <section className="section receipt">
             <div className="app" id="id_card_app" style={{display:show}}>
                   <div className="cardList">
-                      <button className="cardList__btn btn btn--left">
+                      <button className="cardList__btn btn btn--left" onClick={()=>{onClick_btn_slider('left')}}>
                           <div className="icon">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                               <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/>
@@ -298,64 +386,62 @@ function Main() {
                           </div>
                       </button>
                       <div className="cards__wrapper">
-                          <div className="card current--card">
+                        
+                          <div id={currentCard} className="card current--card">
                               <div className="card__image">
                                   <img src="https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs" alt="" />
                                   
                               </div>
                           </div>
-                          <div className="card next--card">
+                          <div id={nextCard} className="card next--card">
                               <div className="card__image">
                                   <img src="https://drive.google.com/uc?export=view&id=1Pg4nO297LB_Cw817-m3Bw4xJ_ySixzbj" alt="" />
                                   
                               </div>
                           </div>
-                          <div className="card previous--card">
+                          <div id={previousCard} className="card previous--card">
                               <div className="card__image">
                                   <img src="https://drive.google.com/uc?export=view&id=1EJycBpFq6Ix-HsN4yRy97wp-sMmDNmc4" alt="" />
                               </div>
-                          </div>
+                          </div> 
                       </div>
-                      <button className="cardList__btn btn btn--right">
+                      {/* <button className="cardList__btn btn btn--right" onClick={()=>{onClick_btn_slider('right')}}>
                           <div className="icon">
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                   <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/>
                               </svg>
                           </div>
-                      </button>
+                      </button> */}
                   </div>
+                  
                   <div className="infoList">
                       <div className="info__wrapper">
-                          <div className="info current--info">
+                          <div id={currentInfo} className="info current--info">
                               <h1 className="text name">Unicef</h1>
                               <h4 className="text location">kenya</h4>
                               {/* <p className="text description">The mountains are calling</p> */}
                           </div>
-                          <div className="info next--info">
-                              <h1 className="text name">World Food Programme</h1>
+                          <div id={nextInfo} className="info next--info">
+                              <h1 className="text name">WFP</h1>
                               <h4 className="text location">Peru</h4>
                               {/* <p className="text description">Adventure is never far away</p> */}
                           </div>
-                          <div className="info previous--info">
-                              <h1 className="text name">Chamonix</h1>
-                              <h4 className="text location">France</h4>
-                              <p className="text description">Let your dreams come true</p>
+                          <div id={previousInfo} className="info previous--info">
+                              <h1 className="text name">초록우산</h1>
+                              <h4 className="text location">S.Korea</h4>
+                              {/* <p className="text description">Let your dreams come true</p> */}
                           </div>
                       </div>
-                  </div>
-                  {/* <div className="app__bg">
-                      <div className="app__bg__image current--image">
-                          <img src="https://source.unsplash.com/Z8dtTatMVMw" alt="" />
-                      </div>
-                      <div className="app__bg__image next--image">
-                          <img src="https://source.unsplash.com/9dmycbFE7mQ" alt="" />
-                      </div>
-                      <div className="app__bg__image previous--image">
-                          <img src="https://source.unsplash.com/m7K4KzL5aQ8" alt="" />
-                      </div>
-                  </div> */}
-              </div>            
+                  </div> 
+
+              </div>
           </section>
+          <div id="id_back_button" className="back-button" style={{display:show}}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" onClick={onClick_back_button}>
+                  <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5 15.538l-3.592-3.548 3.546-3.587-1.416-1.403-3.545 3.589-3.588-3.543-1.405 1.405 3.593 3.552-3.547 3.592 1.405 1.405 3.555-3.596 3.591 3.55 1.403-1.416z"/>
+                </svg>
+          </div>
+
         </div>
     );
 }
