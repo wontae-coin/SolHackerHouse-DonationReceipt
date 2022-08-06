@@ -1,0 +1,13 @@
+main Program Key Path : dist/program/mint-keypair.json
+Program Id: 2Pu4ywuGcoaYRuFNiAnZJjeM8vGBTLRbPuoLKyNCZBCc
+
+
+
+
+--How to Deploy--
+bash build.sh
+{BasePath}/SolHackerHouse-DonationReceipt/nft/./dist/program/mint.so
+
+--How To CLI Test--
+npm install  
+npm run app
