@@ -9,7 +9,6 @@ import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-bl
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
 import hsl from "https://cdn.skypack.dev/hsl-to-hex";
 import debounce from "https://cdn.skypack.dev/debounce";
-// import { Stage } from "@inlet/react-pixi";
 
 // return a random number within a range
 function random(min, max) {
@@ -184,6 +183,7 @@ class Orb {
 
 function Main() {
     const ref = useRef(null);
+    const [show, setShow] = useState('none');
 
     // Create PixiJS app
     const app = new PIXI.Application({
@@ -207,36 +207,6 @@ function Main() {
         orbs.push(orb);
     }
     
-    useEffect(()=>{
-
-        ref.current.appendChild(app.view);
-        
-        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            app.ticker.add(() => {
-              orbs.forEach((orb) => {
-                orb.update();
-                orb.render();
-              });
-            });
-        } else {
-            orbs.forEach((orb) => {
-              orb.update();
-              orb.render();
-            });
-        }
-
-        app.start();
-
-        // document.querySelector(".overlay__btn--colors")
-        //         .addEventListener("click", () => {
-        //                             colorPalette.setColors();
-        //                             colorPalette.setCustomProperties();
-        //                             orbs.forEach((orb) => {
-        //                                 orb.fill = colorPalette.randomColor();
-        //                             });
-        //                     });
-    }, []);
-
     const [address, setAddress] = useState("Hdcogqc4mxkKRrEA7oUqu25bwWgwNeYjGy5BibXuj6Eg");
     const detectAddress = e => {
         const address = e.target.value;
@@ -245,17 +215,50 @@ function Main() {
     const [ getTokens, tokens ] = useGetTokens(address);
     
     const submit_btn_onClick = () =>{
-      document.getElementsByClassName("overlay").className = "overlay zoom-in"
-      document.getElementsByClassName("overlay__inner").className = "overlay__inner fade-out"
+      document.getElementById("id_overlay").className = "overlay zoom-in"
+      document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
+      document.getElementById("id_card_app").className = "app fade-in"
+      setShow('');
+      // document.getElementById("id_overlay__btn").className = "overlay__btn overlay__btn--transparent disable-object"
       getTokens();
     }
+
+    useEffect(()=>{
+
+      ref.current.appendChild(app.view);
+      
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          app.ticker.add(() => {
+            orbs.forEach((orb) => {
+              orb.update();
+              orb.render();
+            });
+          });
+      } else {
+          orbs.forEach((orb) => {
+            orb.update();
+            orb.render();
+          });
+      }
+
+      app.start();
+  
+      // document.querySelector(".overlay__btn--colors")
+      //         .addEventListener("click", () => {
+      //                             colorPalette.setColors();
+      //                             colorPalette.setCustomProperties();
+      //                             orbs.forEach((orb) => {
+      //                                 orb.fill = colorPalette.randomColor();
+      //                             });
+      //                     });
+  }, []);
 
     return (
         <div>
           <section className="section main">
             <div ref={ref} className="orb-canvas container"/>
-            <div className="overlay">
-              <div className="overlay__inner">
+            <div className="overlay" id="id_overlay">
+              <div className="overlay__inner" id="id_overlay__inner">
                   <h1 className="overlay__title">
                   When we give cheerfully and accept gratefully, 
                   <span className="text-gradient">everyone is blessed</span>.
@@ -276,7 +279,7 @@ function Main() {
                               />
                   </div>
                   <div className="overlay__btns">
-                  <button className="overlay__btn overlay__btn--transparent"
+                  <button id="id_overlay__btn" className="overlay__btn overlay__btn--transparent"
                           onClick={submit_btn_onClick}>
                       Search
                   </button>
@@ -285,7 +288,73 @@ function Main() {
             </div>
           </section>
           <section className="section receipt">
-            {/* <Receipts /> */}
+            <div className="app" id="id_card_app" style={{display:show}}>
+                  <div className="cardList">
+                      <button className="cardList__btn btn btn--left">
+                          <div className="icon">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                              <path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/>
+                          </svg>                            
+                          </div>
+                      </button>
+                      <div className="cards__wrapper">
+                          <div className="card current--card">
+                              <div className="card__image">
+                                  <img src="https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs" alt="" />
+                                  
+                              </div>
+                          </div>
+                          <div className="card next--card">
+                              <div className="card__image">
+                                  <img src="https://drive.google.com/uc?export=view&id=1Pg4nO297LB_Cw817-m3Bw4xJ_ySixzbj" alt="" />
+                                  
+                              </div>
+                          </div>
+                          <div className="card previous--card">
+                              <div className="card__image">
+                                  <img src="https://drive.google.com/uc?export=view&id=1EJycBpFq6Ix-HsN4yRy97wp-sMmDNmc4" alt="" />
+                              </div>
+                          </div>
+                      </div>
+                      <button className="cardList__btn btn btn--right">
+                          <div className="icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                  <path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/>
+                              </svg>
+                          </div>
+                      </button>
+                  </div>
+                  <div className="infoList">
+                      <div className="info__wrapper">
+                          <div className="info current--info">
+                              <h1 className="text name">Unicef</h1>
+                              <h4 className="text location">kenya</h4>
+                              {/* <p className="text description">The mountains are calling</p> */}
+                          </div>
+                          <div className="info next--info">
+                              <h1 className="text name">World Food Programme</h1>
+                              <h4 className="text location">Peru</h4>
+                              {/* <p className="text description">Adventure is never far away</p> */}
+                          </div>
+                          <div className="info previous--info">
+                              <h1 className="text name">Chamonix</h1>
+                              <h4 className="text location">France</h4>
+                              <p className="text description">Let your dreams come true</p>
+                          </div>
+                      </div>
+                  </div>
+                  {/* <div className="app__bg">
+                      <div className="app__bg__image current--image">
+                          <img src="https://source.unsplash.com/Z8dtTatMVMw" alt="" />
+                      </div>
+                      <div className="app__bg__image next--image">
+                          <img src="https://source.unsplash.com/9dmycbFE7mQ" alt="" />
+                      </div>
+                      <div className="app__bg__image previous--image">
+                          <img src="https://source.unsplash.com/m7K4KzL5aQ8" alt="" />
+                      </div>
+                  </div> */}
+              </div>            
           </section>
         </div>
     );
