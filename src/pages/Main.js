@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
-import { Button, TextField } from "@mui/material";
-import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { TextField } from "@mui/material";
+// import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
+// import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import "../static/css/main.css";
 import { useGetTokens } from "../hooks";
 import * as PIXI from "https://cdn.skypack.dev/pixi.js";
@@ -242,41 +242,51 @@ function Main() {
         const address = e.target.value;
         setAddress(address);
     } 
-
     const [ getTokens, tokens ] = useGetTokens(address);
+    
+    const submit_btn_onClick = () =>{
+      document.getElementsByClassName("overlay").className = "overlay zoom-in"
+      document.getElementsByClassName("overlay__inner").className = "overlay__inner fade-out"
+      getTokens();
+    }
 
     return (
         <div>
-            <div ref={ref} className="orb-canvas"/>
+          <section className="section main">
+            <div ref={ref} className="orb-canvas container"/>
             <div className="overlay">
-            <div className="overlay__inner">
-                <h1 className="overlay__title">
-                When we give cheerfully and accept gratefully, 
-                <span className="text-gradient">everyone is blessed</span>.
-                </h1>
-                <h3 className="overlay__speaker">- Maya Angelou -</h3>
-                <p className="overlay__description">
-                {/* <strong>Put your address</strong> */}
-                </p>
-                <div className="overlay__input">
-                <TextField onChange={detectAddress}
-                            name="address" 
-                            value={address} 
-                            placeholder="Put your address" 
-                            variant="outlined"
-                            size="small"
-                            fullWidth={true}
-                            color="primary"
-                             />
-                </div>
-                <div className="overlay__btns">
-                <button className="overlay__btn overlay__btn--transparent"
-                        onClick={getTokens}>
-                    Search
-                </button>
-                </div>
+              <div className="overlay__inner">
+                  <h1 className="overlay__title">
+                  When we give cheerfully and accept gratefully, 
+                  <span className="text-gradient">everyone is blessed</span>.
+                  </h1>
+                  <h3 className="overlay__speaker">- Maya Angelou -</h3>
+                  <p className="overlay__description">
+                  {/* <strong>Put your address</strong> */}
+                  </p>
+                  <div className="overlay__input">
+                  <TextField onChange={detectAddress}
+                              name="address" 
+                              value={address} 
+                              placeholder="Put your address" 
+                              variant="outlined"
+                              size="small"
+                              fullWidth={true}
+                              color="primary"
+                              />
+                  </div>
+                  <div className="overlay__btns">
+                  <button className="overlay__btn overlay__btn--transparent"
+                          onClick={submit_btn_onClick}>
+                      Search
+                  </button>
+                  </div>
+              </div>
             </div>
-            </div>
+          </section>
+          <section className="section receipt">
+            {/* <Receipts /> */}
+          </section>
         </div>
     );
 }

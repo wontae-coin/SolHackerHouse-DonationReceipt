@@ -62,10 +62,12 @@
     box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
     border-radius: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.125);
+    animation: zoom-in-zoom-out 1s ease;
   }
   
   .overlay__inner {
     max-width: 36rem;
+    animation: disapper-in 1s ease;
   }
   
   .overlay__title {
@@ -215,3 +217,41 @@
     }
   }
   
+
+  .zoom-in {
+    -webkit-animation-name: zoom-in-effect;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode: forwards;
+  }
+
+  .fade-out {
+    -webkit-animation-name: fade-out-effect;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode: forwards;
+  }
+
+  @keyframes fade-out-effect {
+    0% {
+      opacity: 1;
+    }    
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 0;
+    }
+    
+  }
+
+  @keyframes zoom-in-effect {
+    0% {
+      transform: scale(1, 1);
+    }    
+    100% {
+      transform: scale(0.2, 0.2);
+    }
+  }
