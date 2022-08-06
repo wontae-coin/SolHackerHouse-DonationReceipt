@@ -1,2 +1,1 @@
-export * from "./useOnchainData";
-export * from "./useTest";
+export * from "./useGetTokens";
