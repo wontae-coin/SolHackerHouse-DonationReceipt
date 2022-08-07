@@ -24,7 +24,7 @@ function useGetNftUris(walletPubkey) {
             default_l_nftUris.push("https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5");
             default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
             setNftUris(default_l_nftUris);
-            return;
+            return false;
         }
 
         let l_nftUris = [];

@@ -203,16 +203,21 @@ function Main() {
     const [count, setCount] = useState(0);
     
     const submit_btn_onClick = () =>{
-
-      document.getElementById("id_overlay").className = "overlay zoom-in"
-      document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
-      document.getElementById("id_card_app").className = "app fade-in"
-      document.getElementById("id_back_button").className = "back-button fade-in"
-      setShow('');
-      // document.getElementById("id_overlay__btn").className = "overlay__btn overlay__btn--transparent disable-object"
-      getNftUris();
-      // getTokens();
-      console.log('address', address);
+      
+        getNftUris().then(function(res){
+          console.log(res);
+          if (res !== false){
+            document.getElementById("id_overlay").className = "overlay zoom-in"
+            document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
+            document.getElementById("id_card_app").className = "app fade-in"
+            document.getElementById("id_back_button").className = "back-button fade-in"
+            setShow('');
+          }else{
+            alert("Please put your address");
+          }
+        });
+        // document.getElementById("id_overlay__btn").className = "overlay__btn overlay__btn--transparent disable-object"
+        // getTokens();
     }
 
     const onClick_back_button = () => {
