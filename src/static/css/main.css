@@ -69,12 +69,10 @@
     box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
     border-radius: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.125);
-    animation: zoom-in-zoom-out 1s ease;
   }
   
   .overlay__inner {
     max-width: 36rem;
-    animation: disapper-in 1s ease;
   }
   
   .overlay__title {
@@ -270,6 +268,14 @@
 
   }
 
+  .zoom-out {
+    -webkit-animation-name: zoom-out-effect;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-fill-mode: forwards;
+
+  }
   .fade-out {
     /* background-color: black; */
     -webkit-animation-name: fade-out-effect;
@@ -281,7 +287,6 @@
   }
 
   .fade-in {
-    display: flex;
     -webkit-animation-name: fade-in-effect;
     -webkit-animation-duration: 2s;
     -webkit-animation-iteration-count: 1;
@@ -311,7 +316,6 @@
     100% {
       opacity: 0;
     }
-    
   }
 
   @keyframes zoom-in-effect {
@@ -324,6 +328,19 @@
     100% {
       transform: scale(2, 1.8);
       margin-top: 8rem;
+    }
+  }
+
+  @keyframes zoom-out-effect {
+    0% {
+      transform: scale(2, 1.8);
+      margin-top: 8rem;
+    }    
+    50% {
+      transform: scale(0.1, 0.1);
+    }
+    100% {
+      transform: scale(1, 1);
     }
   }
 
@@ -342,6 +359,7 @@
     position: relative;
     /* width: 100%;
     height: 100%; */
+    display: flex;
     
     justify-content: center;
     align-items: center;
@@ -430,7 +448,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    /* perspective: 1000px; */
+    perspective: 1000px;
     
   }
   
@@ -482,11 +500,11 @@
     --opacity: 0.8;
   }
   .card.previous--card {
-    --card-translateX-offset: calc(-1 * var(--card-width) * 1.1);
+    --card-translateX-offset: calc(-1 * var(--card-width) * 1.3);
     --card-rotation-offset: 25deg;
   }
   .card.next--card {
-    --card-translateX-offset: calc(var(--card-width) * 1.1);
+    --card-translateX-offset: calc(var(--card-width) * 1.3);
     --card-rotation-offset: -25deg;
   }
   .card.previous--card, .card.next--card {
@@ -627,5 +645,19 @@
     transition: all 150ms ease;
   }
   .support a:hover {
+    transform: scale(1.1);
+  }
+
+  .back-button {
+    position: fixed;
+    top: 50px;
+    right:100px;
+    display: flex;
+    fill:rgb(85, 61, 59);
+    cursor: pointer;
+    
+  }
+
+  .back-button:hover {
     transform: scale(1.1);
   }
