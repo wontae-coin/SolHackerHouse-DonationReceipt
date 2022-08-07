@@ -375,21 +375,21 @@ function Main() {
                         
                           <div id={currentCard} className="card current--card">
                               <div className="card__image">
-                                  {/* <img src="https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs" alt="" /> */}
+                                  {/* <img src="https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV" alt="" /> */}
                                   <img src={ntfUris[0]} alt="" />
                                   
                               </div>
                           </div>
                           <div id={nextCard} className="card next--card">
                               <div className="card__image">
-                                  {/* <img src="https://drive.google.com/uc?export=view&id=1Pg4nO297LB_Cw817-m3Bw4xJ_ySixzbj" alt="" /> */}
+                                  {/* <img src="https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5" alt="" /> */}
                                   <img src={ntfUris[1]} alt="" />
                                   
                               </div>
                           </div>
                           <div id={previousCard} className="card previous--card">
                               <div className="card__image">
-                                  {/* <img src="https://drive.google.com/uc?export=view&id=1EJycBpFq6Ix-HsN4yRy97wp-sMmDNmc4" alt="" /> */}
+                                  {/* <img src="https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb" alt="" /> */}
                                   <img src={ntfUris[2]} alt="" />
                               </div>
                           </div> 
