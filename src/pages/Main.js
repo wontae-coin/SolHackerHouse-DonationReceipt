@@ -382,13 +382,15 @@ function Main() {
                           </div>
                           <div id={nextCard} className="card next--card">
                               <div className="card__image">
-                                  <img src="https://drive.google.com/uc?export=view&id=1Pg4nO297LB_Cw817-m3Bw4xJ_ySixzbj" alt="" />
+                                  {/* <img src="https://drive.google.com/uc?export=view&id=1Pg4nO297LB_Cw817-m3Bw4xJ_ySixzbj" alt="" /> */}
+                                  <img src={ntfUris[1]} alt="" />
                                   
                               </div>
                           </div>
                           <div id={previousCard} className="card previous--card">
                               <div className="card__image">
-                                  <img src="https://drive.google.com/uc?export=view&id=1EJycBpFq6Ix-HsN4yRy97wp-sMmDNmc4" alt="" />
+                                  {/* <img src="https://drive.google.com/uc?export=view&id=1EJycBpFq6Ix-HsN4yRy97wp-sMmDNmc4" alt="" /> */}
+                                  <img src={ntfUris[2]} alt="" />
                               </div>
                           </div> 
                       </div>
