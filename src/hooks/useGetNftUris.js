@@ -8,13 +8,17 @@ import axios from 'axios';
 
 function useGetNftUris(walletPubkey) {
     const [nftUris, setNftUris] = useState([]);
-    const connection = new Connection(clusterApiUrl("mainnet-beta"), 'confirmed');
-    // const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
+    const connection_dev = new Connection(clusterApiUrl("devnet"), 'confirmed');
+    const connection_main = new Connection(clusterApiUrl("mainnet-beta"), 'confirmed');
+    let connection = connection_dev;
 
     async function getNftUris() {
         let walletToQuery;
         let tokenAccounts;
+
+        // Searth devnet
         try{
+            console.log('trying to searth in devnet');
             walletToQuery = new PublicKey(walletPubkey);
             tokenAccounts = await connection.getTokenAccountsByOwner(walletToQuery, { programId: SPLToken.TOKEN_PROGRAM_ID});
         }catch (err){
@@ -25,6 +29,24 @@ function useGetNftUris(walletPubkey) {
             default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
             setNftUris(default_l_nftUris);
             return false;
+        }
+        
+        // If not found tokenAccounts, then trying to searth in mainnet.
+        if (tokenAccounts.value.length == 0){
+            try{
+                console.log('trying to searth in mainnet');
+                walletToQuery = new PublicKey(walletPubkey);
+                tokenAccounts = await connection_main.getTokenAccountsByOwner(walletToQuery, { programId: SPLToken.TOKEN_PROGRAM_ID});
+                connection = connection_main;
+            }catch (err){
+                console.log(err);
+                let default_l_nftUris = [];
+                default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV");
+                default_l_nftUris.push("https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5");
+                default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
+                setNftUris(default_l_nftUris);
+                return false;
+            }
         }
 
         let l_nftUris = [];
@@ -55,9 +77,8 @@ function useGetNftUris(walletPubkey) {
         await Promise.all(promises);
 
         console.log('l_nftUris', l_nftUris);
-        // if (l_nftUris.length == 0){
-        //     // l_nftUris.push("https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs");
-        // }
+
+        // Just add default URI to l_nftUris's tail.
         l_nftUris.push("https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV");
         l_nftUris.push("https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5");
         l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
