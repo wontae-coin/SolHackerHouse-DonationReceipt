@@ -186,22 +186,8 @@ class Orb {
 
 function Main() {
     const ref = useRef(null);
-    // const btn_left = useRef(null);
-    // const btn_right = useRef(null);
-    // const current_card = useRef(null);
-    // const previous_card = useRef(null);
-    // const next_card = useRef(null);
-    // const current_image = useRef(null);
-    // const previous_image = useRef(null);
-    // const next_image = useRef(null);
-    // const current_info = useRef(null);
-    // const previous_info = useRef(null);
-    // const next_info = useRef(null);
-    // const texts = useRef(null);
-
 
     const [show, setShow] = useState('none');
-    const [receipts, setReceipts] = useState([]);
     const [address, setAddress] = useState("");
 
     const [currentCard, setCurrentCard] = useState("id_card_current");
@@ -239,8 +225,6 @@ function Main() {
     const onClick_btn_slider = (direction) => {
       if(direction === "left"){
         
-        console.log('left!');
-
         document.getElementById("id_card_current").style.zIndex = 100
         document.getElementById("id_card_next").style.zIndex = 50
         document.getElementById("id_card_previous").style.zIndex = 10
