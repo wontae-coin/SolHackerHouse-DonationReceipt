@@ -19,6 +19,11 @@ function useGetNftUris(walletPubkey) {
             tokenAccounts = await connection.getTokenAccountsByOwner(walletToQuery, { programId: SPLToken.TOKEN_PROGRAM_ID});
         }catch (err){
             console.log(err);
+            let default_l_nftUris = [];
+            default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV");
+            default_l_nftUris.push("https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5");
+            default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
+            setNftUris(default_l_nftUris);
             return;
         }
 
