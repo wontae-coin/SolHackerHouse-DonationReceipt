@@ -9,6 +9,7 @@ import axios from 'axios';
 function useGetNftUris(walletPubkey) {
     const [nftUris, setNftUris] = useState([]);
     const connection = new Connection(clusterApiUrl("mainnet-beta"), 'confirmed');
+    // const connection = new Connection(clusterApiUrl("devnet"), 'confirmed');
 
     async function getNftUris() {
         let walletToQuery;
@@ -30,12 +31,14 @@ function useGetNftUris(walletPubkey) {
                 let accountInfo = SPLToken.AccountLayout.decode(token.account.data);
                 let tokenmetaPubkey = await Metadata.getPDA(accountInfo.mint);
                 const tokenmeta = await Metadata.load(connection, tokenmetaPubkey);
-                console.log(tokenmeta.data.data.uri);
+                console.log('meta uri',tokenmeta.data.data.uri);
                 let res = await axios.get(tokenmeta.data.data.uri);
 
-                console.log(res.data.properties.files[0].uri);
-                if (res.data.properties.files[0].uri){
-                    l_nftUris.push(res.data.properties.files[0].uri);
+                let imgdata = res.data;
+                if (imgdata.properties && imgdata.properties.files[0].uri){
+                    l_nftUris.push(imgdata.properties.files[0].uri);
+                } else if (imgdata.image){
+                    l_nftUris.push(imgdata.image);
                 }
             }catch (err){
                 console.log(err);
@@ -45,10 +48,14 @@ function useGetNftUris(walletPubkey) {
         const promises = tokenAccounts.value.map(getTokensUris);
         // wait until all promises are resolved
         await Promise.all(promises);
-        
-        if (l_nftUris.length == 0){
-            l_nftUris.push("https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs");
-        }
+
+        console.log('l_nftUris', l_nftUris);
+        // if (l_nftUris.length == 0){
+        //     // l_nftUris.push("https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs");
+        // }
+        l_nftUris.push("https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs");
+        l_nftUris.push("https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs");
+        l_nftUris.push("https://drive.google.com/uc?export=view&id=18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs");
         setNftUris(l_nftUris);
     }
     return [getNftUris, nftUris]
