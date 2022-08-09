@@ -2,12 +2,13 @@
 
 # dependencies
 /node_modules
+node_modules
+*node_modules
 /.pnp
 .pnp.js
-/mint-nft/node_modules
-node_modules
+/target
+*target
 
-/mint-nft/target
 
 # testing
 /coverage
@@ -28,3 +29,8 @@ yarn-error.log*
 .history
 yarn.lock
 package-lock.json
+
+#mint-nft
+/mint-nft/node_modules
+/mint-nft/target
+/mint-nft/package-lock.json
