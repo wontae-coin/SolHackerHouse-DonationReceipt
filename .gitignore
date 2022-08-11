@@ -27,8 +27,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .history
-yarn.lock
-package-lock.json
 
 #mint-nft
 /mint-nft/node_modules
