@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { Connection, clusterApiUrl, Keypair } from "@solana/web3.js";
 import { Metaplex } from "@metaplex-foundation/js";
+
+
+import fs from "fs";
 import Arweave from 'arweave';
 import axios from "axios";
 
@@ -122,7 +125,7 @@ function Mint() {
             })
         }
     }, []);
-
+    
     return (
         <div>
             <div>
