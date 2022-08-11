@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { Connection, clusterApiUrl, Keypair } from "@solana/web3.js";
 import { Metaplex } from "@metaplex-foundation/js";
+
+
+import fs from "fs";
 import Arweave from 'arweave';
 
 // 1. 이미지 업로드 -> src 폴더 -> src에 있을거고, 얘가 arweave 들어가면 그떄 uri로 변해서, 
@@ -52,15 +55,41 @@ function Mint() {
         const handleClick =  () => {
             const {title: nftTitle, description: nftDescription, institution: nftInstitution, image: nftImage} = metadata;
         }
-            // const uploadImage = async (image) => {
-            //     const imageTransaction = await arweave.createTransaction({
-            //         data: image,
-            //     });
-            //     imageTransaction.addTag("Content-Type", "image/png");
-            //     await arweave.transactions.sign(imageTransaction, wallet);
-            //     const response = await arweave.transactions.post(imageTransaction);
-            //     return response;
-            // }
+            const uploadImage = async (image) => {
+                
+                const arweave = Arweave.init({
+                    host: 'arweave.net',
+                    port: 443,
+                    protocol: 'https',
+                    timeout: 20000,
+                    logging: false,
+                });
+                
+                const key = JSON.parse(fs.readFileSync("./arweave-keyfile.json", "utf-8"))
+                console.log(key)
+                
+                let data = fs.readFileSync('./ape-punk.png');    
+
+                const imageTransaction = await arweave.createTransaction({
+                    data: data,
+                });
+                imageTransaction.addTag("Content-Type", "image/png");
+
+                
+                await arweave.transactions.sign(imageTransaction, wallet);
+                let img_response = await arweave.transactions.getUploader(imageTransaction);
+
+                while (!img_response.isComplete) {
+                    await img_response.uploadChunk();
+                    console.log(`${img_response.pctComplete}% complete, ${img_response.uploadedChunks}/${img_response.totalChunks}`);
+                }
+                console.log('image upload completed', img_response);
+
+                let imageUrl = imageTransaction.id ? `https://arweave.net/${imageTransaction.id}` : undefined;
+                console.log(imageUrl);
+
+                return imageUrl;
+            }
             
             // const uploadMetadata = async (metadata) => {
             //     const metadataTransaction = await arweave.createTransaction({

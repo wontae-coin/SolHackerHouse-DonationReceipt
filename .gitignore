@@ -3,6 +3,7 @@
 # dependencies
 *node_modules
 
+package-lock.json
 /.pnp
 .pnp.js
 /target
@@ -31,3 +32,5 @@ yarn-error.log*
 /mint-nft/node_modules
 /mint-nft/target
 /mint-nft/package-lock.json
+/mint-nft/yarn.lock
+yarn.lock
