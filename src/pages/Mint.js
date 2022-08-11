@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@mui/material";
 import { Connection, clusterApiUrl, Keypair } from "@solana/web3.js";
 import { Metaplex } from "@metaplex-foundation/js";
 
-
-import fs from "fs";
 import Arweave from 'arweave';
 import axios from "axios";
 
@@ -13,55 +11,66 @@ import axios from "axios";
 // image를 arweave에 올리면 이미지 url이 나오고, uri를... 
 // 2/. 메타데이터 uri
 // 3. nft 발행
-
 function Mint() {
     const [metadata, setMetadata] = useState({
         title: "",
         description: "",
         institution: "",
-        image: ""
     })
     
     const handleChange = ( {target: {name, value} }) => {
         setMetadata({...metadata, [name]: value});
     } 
 
-    const [image, setImage] = useState({
-        file: "",
-        previewURL: ""
-    });
-
-    const handleImageUpload = ( {target: {files}}) => {
+    const [image, setImage] = useState("");
+    const [dataURL, setDataURL] = useState("");
+    const [buffer, setBuffer] = useState("");
+    const handleImageUpload = ( e ) => {
+        // console.log(e.target.files);
+        const {target: {files}} = e;
         const file = files[0];
-        setImage({...image, [file]: file});
+        setImage(file);
     }
-
-    const Preview = () => {
-        // if (!files) return false;
-        const imgEl = document.querySelector(".img__box") 
-        const reader = new FileReader();
-
-        reader.onload = () => (
-            imgEl.style.backgroundImage = `url(${reader.result})`
-        )
-        // reader.readAsDataURL(file);
-    }
-
+    
+    
+    
+    
     const handleClick =  () => {
-        //* IMAGE
-        const nftImageURL = "/mint/image";
-        const formData = new FormData();
-        formData.append("image", image);
-        const config = {
-            Headers: {
-                "content-type": "multipart/form-data"
-            }
-        }
+        console.log(image);
+        const reader = new FileReader();
+        
+        reader.addEventListener("load", () => {
+            setDataURL(reader.result);
+            let a = Buffer.from(reader.result, "base64");
+            console.log(a);
+            console.log(dataURL);
+        });
+        reader.readAsDataURL(image)
 
-        axios.post(nftImageURL, formData).then( res => {
-            console.log(res);
-        })
 
+        // const getBase64Image = (image) => {
+        //     const canvas = document.createElement("canvas");
+        //     canvas.width = image.width;
+        //     canvas.height = image.height;
+        //     const ctx = canvas.getContext("2d");
+        //     ctx.drawImage(image, 0, 0);
+        //     const dataURL = canvas.toDataURL("image/png");
+        //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+        // };
+
+        // const base64Image = getBase64Image(image.file);
+        // console.log(base64Image);
+        // console.log(image);
+
+
+        // const formdata = new FormData();
+        // formdata.append('uploadImage', image.file)
+        // const config = {
+        //     Headers: {
+        //         "content-type": "multipart/form-data"
+        //     }
+        // }
+        // axios.post("", formdata, config);
 
         //* METADATA
         const {title: nftTitle, description: nftDescription, institution: nftInstitution, image: nftImage} = metadata;
@@ -106,24 +115,25 @@ function Mint() {
      
     //* 사용자가 이미지 입력?
     useEffect( () => {
-         //* componentDidMount
+     
+        //* componentDidMount
         let connection = new Connection(clusterApiUrl("devnet"));
         let metaplex = new Metaplex(connection);
         let arweave = Arweave.init({});
         
-        //* componentUnmount 초기화
-        return () => {
-            connection = "";
-            metaplex = "";
-            arweave = "";
+        // //* componentUnmount 초기화
+        // return () => {
+        //     connection = "";
+        //     metaplex = "";
+        //     arweave = "";
             
-            setMetadata({
-                title: "",
-                description: "",
-                institution: "",
-                image: ""
-            })
-        }
+        //     setMetadata({
+        //         title: "",
+        //         description: "",
+        //         institution: "",
+        //         image: ""
+        //     })
+        // }
     }, []);
     
     return (
@@ -146,7 +156,7 @@ function Mint() {
                 <Button variant="outlined" onClick={handleClick}>Submit</Button>
             </div>
             <div>
-                <div className="img__box"></div>
+                <canvas className="img__box"></canvas>
             </div>
         </div>
     );
