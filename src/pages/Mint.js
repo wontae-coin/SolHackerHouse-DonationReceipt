@@ -5,7 +5,6 @@ import { Metaplex } from "@metaplex-foundation/js";
 
 import Arweave from 'arweave';
 import axios from "axios";
-import mykey from "../images/arweave-keyfile.json"
 import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 
@@ -35,11 +34,7 @@ function Mint() {
         setImage(file);
     }
 
-    const str =  cv.imencode('.jpg', image).toString('base64');
-    const buffer = Buffer.from(str, 'base64');
-    
-    
-    
+
     const handleClick =  () => {
         console.log(image);
         const reader = new FileReader();
