@@ -5,6 +5,9 @@ import { Metaplex } from "@metaplex-foundation/js";
 
 import Arweave from 'arweave';
 import axios from "axios";
+import mykey from "../images/arweave-keyfile.json"
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+
 
 
 // 1. 이미지 업로드 -> src 폴더 -> src에 있을거고, 얘가 arweave 들어가면 그떄 uri로 변해서, 
@@ -24,14 +27,16 @@ function Mint() {
 
     const [image, setImage] = useState("");
     const [dataURL, setDataURL] = useState("");
-    const [buffer, setBuffer] = useState("");
+    const [buffers, setBuffer] = useState("");
     const handleImageUpload = ( e ) => {
         // console.log(e.target.files);
         const {target: {files}} = e;
         const file = files[0];
         setImage(file);
     }
-    
+
+    const str =  cv.imencode('.jpg', image).toString('base64');
+    const buffer = Buffer.from(str, 'base64');
     
     
     
@@ -41,11 +46,9 @@ function Mint() {
         
         reader.addEventListener("load", () => {
             setDataURL(reader.result);
-            let a = Buffer.from(reader.result, "base64");
-            console.log(a);
-            console.log(dataURL);
         });
         reader.readAsDataURL(image)
+
 
 
         // const getBase64Image = (image) => {
@@ -115,11 +118,12 @@ function Mint() {
      
     //* 사용자가 이미지 입력?
     useEffect( () => {
-     
         //* componentDidMount
         let connection = new Connection(clusterApiUrl("devnet"));
         let metaplex = new Metaplex(connection);
-        let arweave = Arweave.init({});
+
+
+
         
         // //* componentUnmount 초기화
         // return () => {
