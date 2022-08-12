@@ -5,6 +5,9 @@ import { Metaplex } from "@metaplex-foundation/js";
 
 import Arweave from 'arweave';
 import axios from "axios";
+import mykey from "../images/arweave-keyfile.json"
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+
 
 
 // 1. 이미지 업로드 -> src 폴더 -> src에 있을거고, 얘가 arweave 들어가면 그떄 uri로 변해서, 
@@ -24,14 +27,16 @@ function Mint() {
 
     const [image, setImage] = useState("");
     const [dataURL, setDataURL] = useState("");
-    const [buffer, setBuffer] = useState("");
+    const [buffers, setBuffer] = useState("");
     const handleImageUpload = ( e ) => {
         // console.log(e.target.files);
         const {target: {files}} = e;
         const file = files[0];
         setImage(file);
     }
-    
+
+    const str =  cv.imencode('.jpg', image).toString('base64');
+    const buffer = Buffer.from(str, 'base64');
     
     
     
@@ -42,10 +47,27 @@ function Mint() {
         reader.addEventListener("load", () => {
             setDataURL(reader.result);
             let a = Buffer.from(reader.result, "base64");
-            console.log(a);
-            console.log(dataURL);
+            //let b = a.buffer; 
+            //let c = JSON.stringify(a); 
+            let d  = new Uint8Array(a)
+            //console.log('raw buffer', b)
+            console.log('raw', a);
+            console.log('raw uintarray8', d[5])
+            let e = a.toString('base64')
+            //console.log(Object.keys(a))
+            //console.log(Object.prototype.toString.apply(a) )
+            //console.log(Object.prototype.toString.apply(d) )
+            console.log('raw e', e)
+            //console.log('raw json', c )
+            setBuffer(d)
+            //console.log(dataURL);
+
+
+            const str =  cv.imencode('.jpg', image).toString('base64');
+            const buffer = Buffer.from(str, 'base64');
         });
         reader.readAsDataURL(image)
+
 
 
         // const getBase64Image = (image) => {
@@ -115,11 +137,57 @@ function Mint() {
      
     //* 사용자가 이미지 입력?
     useEffect( () => {
-     
         //* componentDidMount
         let connection = new Connection(clusterApiUrl("devnet"));
         let metaplex = new Metaplex(connection);
-        let arweave = Arweave.init({});
+
+
+        const tempFn = async () => {
+            const arweave = Arweave.init({
+                host: 'arweave.net',
+                port: 443,
+                protocol: 'https',
+                timeout: 20000,
+                logging: false,
+            });
+            //const key = JSON.parse(fs.readFileSync("./arweave-keyfile.json", "utf-8"))
+            // console.log(mykey)
+            let key = mykey
+            //let key = JSON.parse(mykey)
+            console.log(key)
+            console.log('here', buffers)
+            
+            let transaction = await arweave.createTransaction({
+                data: buffers
+            });
+            transaction.addTag('Content-Type', 'image/png'  );
+        
+        
+            await arweave.transactions.sign(transaction, key );
+        
+            //const img_response = await arweave.transactions.post(transaction); 
+            let img_response = await arweave.transactions.getUploader(transaction);
+            console.log(img_response);
+        
+            while (!img_response.isComplete) {
+                await img_response.uploadChunk();
+                console.log(`${img_response.pctComplete}% complete, ${img_response.uploadedChunks}/${img_response.totalChunks}`);
+              }
+        
+            console.log('img competed2')
+           
+            let imageUrl = transaction.id ? `https://arweave.net/${transaction.id}` : undefined;
+            console.log(imageUrl);
+        }
+        //if (tokenAccounts.value.length == 0){
+        console.log('checkBuffer', buffers)
+        if (buffers) {
+            console.log('buffer')
+            //tempFn();
+        }
+        else {
+            console.log('None buffer')
+        }
         
         // //* componentUnmount 초기화
         // return () => {
@@ -134,7 +202,7 @@ function Mint() {
         //         image: ""
         //     })
         // }
-    }, []);
+    }, [buffers]);
     
     return (
         <div>
