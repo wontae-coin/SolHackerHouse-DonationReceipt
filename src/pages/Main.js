@@ -337,7 +337,7 @@ function Main() {
               <div className="overlay__inner" id="id_overlay__inner">
                   <h1 className="overlay__title">
                   When we give cheerfully and accept gratefully, 
-                  <span className="text-gradient">everyone is blessed</span>.
+                  <span className="text-gradient">{"\u00A0"}everyone is blessed</span>.
                   </h1>
                   <h3 className="overlay__speaker">- Maya Angelou -</h3>
                   <p className="overlay__description">

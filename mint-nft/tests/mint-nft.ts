@@ -1,15 +1,13 @@
 import * as anchor from "@project-serum/anchor";
-import { Program } from "@project-serum/anchor";
+// ** Comment this to use solpg imported IDL **
 import { MintNft } from "../target/types/mint_nft";
 
 
 describe("nft-marketplace", async () => {
   
-  const testNftTitle = "Donate NFT2!";
-  const testNftSymbol = "DoNFT2";
-  const testNftUri = "https://raw.githubusercontent.com/Coding-and-Crypto/Solana-NFT-Marketplace/master/assets/example.json";
-  //https://drive.google.com/file/d/18wYCEWnuduEaEC7Bmm6_EZqXqrjbU6fs/view?usp=sharing
-  //"https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/640px-SpongeBob_SquarePants_character.svg.png"
+  const testNftTitle = "donft_11";
+  const testNftSymbol = "DONFT";
+  const testNftUri = "https://raw.githubusercontent.com/kyarate/test/main/example6.json";
 
   const provider = anchor.AnchorProvider.env()
   const wallet = provider.wallet as anchor.Wallet;
@@ -23,16 +21,14 @@ describe("nft-marketplace", async () => {
   // ** Comment this to use solpg imported IDL **
   const program = anchor.workspace.MintNft as anchor.Program<MintNft>;
 
-  //Token MetaData from MetaPlex
   const TOKEN_METADATA_PROGRAM_ID = new anchor.web3.PublicKey(
     "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
   );
 
 
   it("Mint!", async () => {
-
     // Derive the mint address and the associated token account address
-
+    // Get PDA 
     const mintKeypair: anchor.web3.Keypair = anchor.web3.Keypair.generate();
     const tokenAddress = await anchor.utils.token.associatedAddress({
       mint: mintKeypair.publicKey,
@@ -68,10 +64,10 @@ describe("nft-marketplace", async () => {
       testNftTitle, testNftSymbol, testNftUri
     )
     .accounts({
-      masterEdition: masterEditionAddress,  
-      metadata: metadataAddress,  
-      mint: mintKeypair.publicKey, 
-      tokenAccount: tokenAddress,  
+      masterEdition: masterEditionAddress,
+      metadata: metadataAddress,
+      mint: mintKeypair.publicKey,
+      tokenAccount: tokenAddress,
       mintAuthority: wallet.publicKey,
       tokenMetadataProgram: TOKEN_METADATA_PROGRAM_ID,
     })

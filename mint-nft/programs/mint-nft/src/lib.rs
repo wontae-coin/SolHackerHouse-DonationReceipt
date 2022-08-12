@@ -14,7 +14,8 @@ use {
     },
 };
 
-declare_id!("HcRTmCATYGf5ZohUmL6vGJtHS5woFydQe1EGUtvEJ2YA");
+
+declare_id!("9SaHngP1rgb62ALAnCwM95yxPsiXXwqQaCH4huMCysfn");
 
 
 #[program]
@@ -89,8 +90,6 @@ pub mod mint_nft {
             ),
             1,
         )?;
-        
-        // this code are come from metaplex 
 
         msg!("Creating metadata account...");
         msg!("Metadata account address: {}", &ctx.accounts.metadata.to_account_info().key());
@@ -102,7 +101,7 @@ pub mod mint_nft {
                 ctx.accounts.mint_authority.key(), 
                 ctx.accounts.mint_authority.key(), 
                 ctx.accounts.mint_authority.key(), 
-                metadata_title,    // this sis config for metadata
+                metadata_title, 
                 metadata_symbol, 
                 metadata_uri, 
                 None,
@@ -151,7 +150,6 @@ pub mod mint_nft {
 }
 
 
-
 #[derive(Accounts)]
 pub struct MintNft<'info> {
     /// CHECK: We're about to create this with Metaplex
@@ -172,5 +170,5 @@ pub struct MintNft<'info> {
     pub token_program: Program<'info, token::Token>,
     pub associated_token_program: Program<'info, associated_token::AssociatedToken>,
     /// CHECK: Metaplex will check this
-    pub token_metadata_program: UncheckedAccount<'info>,  // metaplex 
+    pub token_metadata_program: UncheckedAccount<'info>,
 }
