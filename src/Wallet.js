@@ -18,7 +18,6 @@ import {
 } from '@solana/wallet-adapter-react-ui';
 import { clusterApiUrl } from '@solana/web3.js';
 import { createDefaultAuthorizationResultCache, SolanaMobileWalletAdapter } from '@solana-mobile/wallet-adapter-mobile';
-import {} from "./"
 
 import App from './App';
 // Default styles that can be overridden by your app
@@ -54,9 +53,7 @@ export const Wallet = () => {
         <ConnectionProvider endpoint={endpoint}>
             <WalletProvider wallets={wallets} autoConnect>
                 <WalletModalProvider>
-
-                    {/* <WalletMultiButton />
-                    <WalletDisconnectButton /> */}
+                    <App/>
                 </WalletModalProvider>
             </WalletProvider>
         </ConnectionProvider>

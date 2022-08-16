@@ -10,7 +10,8 @@ import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
 import hsl from "https://cdn.skypack.dev/hsl-to-hex";
 import debounce from "https://cdn.skypack.dev/debounce";
 import MintSvg from "../static/svg/mint.svg";
-
+import { useWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 // return a random number within a range
 function random(min, max) {
@@ -184,6 +185,11 @@ class Orb {
 };
 
 function Main() {
+    const { publicKey, wallet, disconnect } = useWallet();
+    const [ placeholder, setPlaceholder ] = useState("");
+    useEffect( () => {
+      setPlaceholder(publicKey === null? "Connect your wallet" : publicKey.toString());
+    }, [publicKey])
     const ref = useRef(null);
 
     const [show, setShow] = useState('none');
@@ -362,12 +368,15 @@ function Main() {
                               setAddress(val.target.value);
                               }}
                               name="address" 
-                              placeholder="Put your address" 
+                              placeholder={placeholder} 
                               variant="outlined"
                               size="small"
                               fullWidth={true}
                               color="primary"
                               />
+                  </div>
+                  <div>
+                    <WalletMultiButton/>
                   </div>
                   <div className="overlay__btns">
                   <button id="id_overlay__btn" className="overlay__btn"
