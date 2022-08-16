@@ -24,9 +24,6 @@ function useGetNftUris(walletPubkey) {
         }catch (err){
             console.log(err);
             let default_l_nftUris = [];
-            default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV");
-            default_l_nftUris.push("https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5");
-            default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
             setNftUris(default_l_nftUris);
             return false;
         }
@@ -41,34 +38,30 @@ function useGetNftUris(walletPubkey) {
             }catch (err){
                 console.log(err);
                 let default_l_nftUris = [];
-                default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV");
-                default_l_nftUris.push("https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5");
-                default_l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
                 setNftUris(default_l_nftUris);
                 return false;
             }
         }
 
         let l_nftUris = [];
-        console.log('tokenAccounts.value.length', tokenAccounts.value.length);
-        console.log('tokenAccounts', tokenAccounts);
 
         async function getTokensUris(token){
             try{
                 let accountInfo = SPLToken.AccountLayout.decode(token.account.data);
                 let tokenmetaPubkey = await Metadata.getPDA(accountInfo.mint);
                 const tokenmeta = await Metadata.load(connection, tokenmetaPubkey);
-                console.log('meta uri',tokenmeta.data.data.uri);
                 let res = await axios.get(tokenmeta.data.data.uri);
-
+                
                 let imgdata = res.data;
                 if (imgdata.properties && imgdata.properties.files[0].uri){
-                    l_nftUris.push(imgdata.properties.files[0].uri);
+                    // l_nftUris.push(imgdata.properties.files[0].uri);
+                    l_nftUris.push(imgdata);
                 } else if (imgdata.image){
-                    l_nftUris.push(imgdata.image);
+                    // l_nftUris.push(imgdata.image);
+                    l_nftUris.push(imgdata);
                 }
             }catch (err){
-                console.log(err);
+                return false;
             }
         }
         // map array, tokenAccounts.value, to promises
@@ -76,12 +69,6 @@ function useGetNftUris(walletPubkey) {
         // wait until all promises are resolved
         await Promise.all(promises);
 
-        console.log('l_nftUris', l_nftUris);
-
-        // Just add default URI to l_nftUris's tail.
-        l_nftUris.push("https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV");
-        l_nftUris.push("https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5");
-        l_nftUris.push("https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb");
         setNftUris(l_nftUris);
     }
     return [getNftUris, nftUris]

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef, FC, useCallback} from "react";
-import { TextField } from "@mui/material";
+import React, {useState, useEffect, useRef} from "react";
+import { TextField, Grid } from "@mui/material";
 // import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
 // import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import "../static/css/main.css";
@@ -9,6 +9,7 @@ import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-bl
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
 import hsl from "https://cdn.skypack.dev/hsl-to-hex";
 import debounce from "https://cdn.skypack.dev/debounce";
+import MintSvg from "../static/svg/mint.svg";
 
 
 // return a random number within a range
@@ -186,6 +187,8 @@ function Main() {
     const ref = useRef(null);
 
     const [show, setShow] = useState('none');
+    const [showMint, setShowMint] = useState('none');
+    const [showBack, setShowBack] = useState('none');    
     const [address, setAddress] = useState("");
 
     const [ getNftUris, ntfUris ] = useGetNftUris(address);
@@ -203,19 +206,28 @@ function Main() {
     const submit_btn_onClick = () =>{
       
         getNftUris().then(function(res){
-          console.log(res);
           if (res !== false){
             document.getElementById("id_overlay").className = "overlay zoom-in"
             document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
             document.getElementById("id_card_app").className = "app fade-in"
             document.getElementById("id_back_button").className = "back-button fade-in"
             setShow('');
+            setShowBack('');
           }else{
             alert("Please put your address");
           }
         });
         // document.getElementById("id_overlay__btn").className = "overlay__btn overlay__btn--transparent disable-object"
         // getTokens();
+    }
+
+    const show_mint_btn_onClick = () => {
+      document.getElementById("id_overlay").className = "overlay zoom-in"
+      document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
+      document.getElementById("id_mint_app").className = "app fade-in"
+      document.getElementById("id_back_button").className = "back-button fade-in"
+      setShowMint('');
+      setShowBack('');
     }
 
     const onClick_back_button = () => {
@@ -225,6 +237,8 @@ function Main() {
       document.getElementById("id_card_app").className = "app fade-out"
       document.getElementById("id_back_button").className = "back-button fade-out"
       setShow('none');
+      setShowMint('none');
+      setShowBack('none');      
     }
 
     const onClick_btn_slider = (direction) => {
@@ -356,14 +370,15 @@ function Main() {
                               />
                   </div>
                   <div className="overlay__btns">
-                  <button id="id_overlay__btn" className="overlay__btn overlay__btn--transparent"
+                  <button id="id_overlay__btn" className="overlay__btn"
                           onClick={submit_btn_onClick}>
                       Search
                   </button>
-                  <button id="id_overlay__btn" className="overlay__btn overlay__btn--transparent"
-                          onClick={submit_btn_onClick}>
-                      Connect Wallet
-                  </button>
+                  <img className="overlay_btn_mint" 
+                       style={{display:showMint}}
+                       src={MintSvg} 
+                       onClick={show_mint_btn_onClick}
+                  />                  
                   </div>
               </div>
             </div>
@@ -379,25 +394,22 @@ function Main() {
                           </div>
                       </button>
                       <div className="cards__wrapper">
-                        
                           <div id={currentCard} className="card current--card">
                               <div className="card__image">
                                   {/* <img src="https://drive.google.com/uc?export=view&id=1Qsb4WpoRbF6Hjw-IokgE18M81sEI6GUV" alt="" /> */}
-                                  <img src={ntfUris[0]} alt="" />
-                                  
+                                  <img src={ntfUris[0]?.image} alt="" />
                               </div>
                           </div>
                           <div id={nextCard} className="card next--card">
                               <div className="card__image">
                                   {/* <img src="https://drive.google.com/uc?export=view&id=13ckvorpPQWJQbYNW2-yhxBkCC4_yRbG5" alt="" /> */}
-                                  <img src={ntfUris[1]} alt="" />
-                                  
+                                  <img src={ntfUris[1]?.image} alt="" />
                               </div>
                           </div>
                           <div id={previousCard} className="card previous--card">
                               <div className="card__image">
                                   {/* <img src="https://drive.google.com/uc?export=view&id=1Tqs07Q4PFOHDPi_tKa55IfsyJllnOJGb" alt="" /> */}
-                                  <img src={ntfUris[2]} alt="" />
+                                  <img src={ntfUris[2]?.image} alt="" />
                               </div>
                           </div> 
                       </div>
@@ -409,30 +421,77 @@ function Main() {
                           </div>
                       </button> */}
                   </div>
+
                   
+
                   <div className="infoList">
                       <div className="info__wrapper">
                           <div id={currentInfo} className="info current--info">
-                              <h1 className="text name">Unicef</h1>
-                              <h4 className="text location">kenya</h4>
-                              {/* <p className="text description">The mountains are calling</p> */}
+                              <h1 className="text name">{ntfUris[0]?.charity}</h1>
+                              <h4 className="text location">{ntfUris[0]?.location}</h4>
+                              <h4 className="text date">{ntfUris[0]?.date}</h4>
+                              <p className="text description">{ntfUris[0]?.description}</p>
                           </div>
                           <div id={nextInfo} className="info next--info">
-                              <h1 className="text name">WFP</h1>
-                              <h4 className="text location">Peru</h4>
-                              {/* <p className="text description">Adventure is never far away</p> */}
+                          <h1 className="text name">{ntfUris[1]?.charity}</h1>
+                              <h4 className="text location">{ntfUris[1]?.location}</h4>
+                              <h4 className="text date">{ntfUris[1]?.date}</h4>
+                              <p className="text description">{ntfUris[1]?.description}</p>
                           </div>
                           <div id={previousInfo} className="info previous--info">
-                              <h1 className="text name">초록우산</h1>
-                              <h4 className="text location">S.Korea</h4>
-                              {/* <p className="text description">Let your dreams come true</p> */}
+                          <h1 className="text name">{ntfUris[2]?.charity}</h1>
+                              <h4 className="text location">{ntfUris[2]?.location}</h4>
+                              <h4 className="text date">{ntfUris[2]?.date}</h4>
+                              <p className="text description">{ntfUris[2]?.description}</p>
                           </div>
                       </div>
                   </div> 
-
               </div>
+              <div className="app" id="id_mint_app" style={{display:showMint}}>
+                    <Grid container spacing={1}>
+                      <Grid item xs={12}>
+                      <label style={{fontSize:'1rem', marginRight:'20px'}}>Wallet adderss</label>
+                      <TextField hiddenLabel
+                                    id="input-amount-coin"
+                                    // inputRef={withdrawalAmount}
+                                    size="small"
+                                    // label="Amount"
+                                    autoComplete="off" 
+                                    onChange = {(event, val) => {
+                                                              if (val !== null){
+                                                                // action
+                                                              };
+                                    }}
+                                    width='100%'
+                                    // sx={{maxWidth: '450px'}}
+                                      />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <label style={{fontSize:'1rem',  marginRight:'20px'}}>Wallet adderss</label>
+                        <TextField hiddenLabel
+                                      id="input-amount-coin"
+                                      // inputRef={withdrawalAmount}
+                                      size="small"
+                                      // label="Amount"
+                                      autoComplete="off" 
+                                      onChange = {(event, val) => {
+                                                                if (val !== null){
+                                                                  // action
+                                                                };
+                                      }}
+                                      width='100%'
+                                      // sx={{maxWidth: '450px'}}
+                                        />
+                      </Grid>   
+                      <Grid item xs={12}>
+                        <button className="overlay__btn overlay__mint_submit_btn overlay__btn--transparent">
+                            Mint
+                        </button>
+                      </Grid>
+                    </Grid>
+                </div>              
           </section>
-          <div id="id_back_button" className="back-button" style={{display:show}}>
+          <div id="id_back_button" className="back-button" style={{display:showBack}}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" onClick={onClick_back_button}>
                   <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5 15.538l-3.592-3.548 3.546-3.587-1.416-1.403-3.545 3.589-3.588-3.543-1.405 1.405 3.593 3.552-3.547 3.592 1.405 1.405 3.555-3.596 3.591 3.55 1.403-1.416z"/>
                 </svg>

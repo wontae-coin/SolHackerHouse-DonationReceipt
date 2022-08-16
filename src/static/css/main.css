@@ -116,6 +116,19 @@
     
   }
 
+
+  .overlay_btn_mint {
+    border: #000 solid 2px;
+    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+
+  .overlay_btn_mint:hover {
+    scale: 1.1;
+  }
+  
   .overlay__btns {
     width: 100%;
     max-width: 30rem;
@@ -133,7 +146,7 @@
     font-weight: 600;
     color: var(--light-color);
     background: var(--dark-color);
-    border: none;
+    /* border: none; */
     border-radius: 0.5rem;
     transition: transform 150ms ease;
     outline-color: hsl(var(--hue), 95%, 50%);
@@ -143,7 +156,7 @@
     transform: scale(1.05);
     cursor: pointer;
   }
-  
+
   .overlay__btn--transparent {
     background: transparent;
     color: var(--dark-color);
@@ -315,7 +328,19 @@
     .card.next--card {
       display: none;
       /* --card-translateX-offset: calc(var(--card-width) * 0); */
-    }    
+    }
+    
+    /* @keyframes zoom-in-effect {
+      100%{
+        margin-top: 8rem;
+      }
+    }
+    @keyframes zoom-out-effect {
+      0%{
+        margin-top: 8rem;
+      }
+    } */
+    
   }
 
   .zoom-in {
@@ -395,14 +420,14 @@
     }
     100% {
       transform: scale(2, 1.8);
-      margin-top: 8rem;
+      /* margin-top: 8rem; */
     }
   }
 
   @keyframes zoom-out-effect {
     0% {
       transform: scale(2, 1.8);
-      margin-top: 8rem;
+      /* margin-top: 8rem; */
     }    
     50% {
       transform: scale(0.1, 0.1);
@@ -626,14 +651,14 @@
     --mg-left: 40px;
     --text-size-offset: 0.12;
     font-weight: 600;
-    margin-left: var(--mg-left);
+    margin-left: var(--mg-left) * 1;
     margin-bottom: calc(var(--mg-left) / 2);
     padding-bottom: 0.8rem;
   }
   .info .location::before, .info .location::after {
     content: "";
     position: absolute;
-    background: rgb(85, 75, 75);
+    /* background: rgb(85, 75, 75); */
     left: 0%;
     transform: translate(calc(-1 * var(--mg-left)), -50%);
   }
@@ -647,7 +672,13 @@
     width: 60px;
     height: 2px;
   }
+
+  .info .date {
+    --text-size-offset: 0.1;
+  }
+
   .info .description {
+    text-transform: lowercase;
     --text-size-offset: 0.065;
     font-weight: 500;
   }
