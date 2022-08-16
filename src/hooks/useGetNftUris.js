@@ -43,6 +43,10 @@ function useGetNftUris(walletPubkey) {
             }
         }
 
+        if (tokenAccounts.value.length == 0){
+            return false;
+        }
+
         let l_nftUris = [];
 
         async function getTokensUris(token){

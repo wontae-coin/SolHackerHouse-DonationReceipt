@@ -430,19 +430,19 @@ function Main() {
                               <h1 className="text name">{ntfUris[0]?.charity}</h1>
                               <h4 className="text location">{ntfUris[0]?.location}</h4>
                               <h4 className="text date">{ntfUris[0]?.date}</h4>
-                              <p className="text description">{ntfUris[0]?.description}</p>
+                              <p className="text description">{ntfUris[0]?.slogan}</p>
                           </div>
                           <div id={nextInfo} className="info next--info">
                           <h1 className="text name">{ntfUris[1]?.charity}</h1>
                               <h4 className="text location">{ntfUris[1]?.location}</h4>
                               <h4 className="text date">{ntfUris[1]?.date}</h4>
-                              <p className="text description">{ntfUris[1]?.description}</p>
+                              <p className="text description">{ntfUris[1]?.slogan}</p>
                           </div>
                           <div id={previousInfo} className="info previous--info">
                           <h1 className="text name">{ntfUris[2]?.charity}</h1>
                               <h4 className="text location">{ntfUris[2]?.location}</h4>
                               <h4 className="text date">{ntfUris[2]?.date}</h4>
-                              <p className="text description">{ntfUris[2]?.description}</p>
+                              <p className="text description">{ntfUris[2]?.slogan}</p>
                           </div>
                       </div>
                   </div> 
