@@ -1,7 +1,7 @@
 import { useWallet } from '@solana/wallet-adapter-react';
 import React, { useCallback, useMemo } from 'react';
 
-function WalletConnectButton({children, disabled, onClick}) {
+function BaseWalletConnectButton({children, disabled, onClick, ...props}) {
     const { wallet, connect, connecting, connected } = useWallet();
 
     const handleClick = useCallback(
@@ -29,9 +29,10 @@ function WalletConnectButton({children, disabled, onClick}) {
             <button
                 onClick={handleClick}
                 disabled={disabled || !wallet || connecting || connected}
+                {...props}
             >{content}</button>
         </div>
     );
 }
 
-export {WalletConnectButton};
+export {BaseWalletConnectButton};

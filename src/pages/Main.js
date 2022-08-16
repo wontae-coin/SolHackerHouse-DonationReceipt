@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef, FC, useCallback} from "react";
 import { TextField } from "@mui/material";
 // import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
-// import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import "../static/css/main.css";
 import { useGetNftUris } from "../hooks";
 import * as PIXI from "https://cdn.skypack.dev/pixi.js";
@@ -9,6 +8,8 @@ import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-bl
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
 import hsl from "https://cdn.skypack.dev/hsl-to-hex";
 import debounce from "https://cdn.skypack.dev/debounce";
+import { BaseWalletConnectButton } from "../components"
+import BaseWalletDisconnectButton from "../components/BaseWalletDisconnectButton";
 
 
 // return a random number within a range
@@ -183,6 +184,9 @@ class Orb {
 };
 
 function Main() {
+  
+
+
     const ref = useRef(null);
 
     const [show, setShow] = useState('none');
@@ -360,10 +364,10 @@ function Main() {
                           onClick={submit_btn_onClick}>
                       Search
                   </button>
-                  <button id="id_overlay__btn" className="overlay__btn overlay__btn--transparent"
-                          onClick={submit_btn_onClick}>
-                      Connect Wallet
-                  </button>
+                  <BaseWalletConnectButton id="id_overlay__btn" className="overlay__btn overlay__btn--transparent">
+                  </BaseWalletConnectButton>
+                  <BaseWalletDisconnectButton id="id_overlay__btn" className="overlay__btn overlay__btn--transparent">
+                  </BaseWalletDisconnectButton>
                   </div>
               </div>
             </div>

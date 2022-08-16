@@ -6,7 +6,7 @@ import { Metaplex } from "@metaplex-foundation/js";
 import Arweave from 'arweave';
 import axios from "axios";
 import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
-
+import { BaseWalletConnectButton } from "../components";
 
 
 // 1. 이미지 업로드 -> src 폴더 -> src에 있을거고, 얘가 arweave 들어가면 그떄 uri로 변해서, 
@@ -42,6 +42,8 @@ function Mint() {
         reader.addEventListener("load", () => {
             setDataURL(reader.result);
         });
+        console.log(dataURL);
+        console.log()
         reader.readAsDataURL(image)
 
 
@@ -157,6 +159,7 @@ function Mint() {
             <div>
                 <canvas className="img__box"></canvas>
             </div>
+            <BaseWalletConnectButton/>
         </div>
     );
 }
