@@ -188,7 +188,9 @@ function Main() {
     const { publicKey, wallet, disconnect } = useWallet();
     const [ placeholder, setPlaceholder ] = useState("");
     useEffect( () => {
-      setPlaceholder(publicKey === null? "Connect your wallet" : publicKey.toString());
+      let addr = publicKey === null? "Connect your wallet" : publicKey.toString()
+      setPlaceholder(addr);
+      setAddress(addr)
     }, [publicKey])
     const ref = useRef(null);
 
@@ -209,9 +211,8 @@ function Main() {
 
     const [count, setCount] = useState(0);
     
-    const submit_btn_onClick = () =>{
-      
-        getNftUris().then(function(res){
+    const submit_btn_onClick = (address) =>{
+        getNftUris().then(() => setAddress(address)).then(function(res){
           if (res !== false){
             document.getElementById("id_overlay").className = "overlay zoom-in"
             document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
@@ -219,6 +220,7 @@ function Main() {
             document.getElementById("id_back_button").className = "back-button fade-in"
             setShow('');
             setShowBack('');
+            setAddress("Connect your wallet")
           }else{
             alert("Please put your address");
           }
@@ -365,10 +367,12 @@ function Main() {
                   </p>
                   <div className="overlay__input">
                   <TextField onChange={(val) =>{
+                              // console.log(val.target.value);
                               setAddress(val.target.value);
                               }}
                               name="address" 
-                              placeholder={placeholder} 
+                              placeholder={placeholder}
+                              value={address}
                               variant="outlined"
                               size="small"
                               fullWidth={true}
