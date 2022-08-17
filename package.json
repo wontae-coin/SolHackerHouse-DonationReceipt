@@ -29,7 +29,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@project-serum/anchor": "^0.24.2"
   },
   "devDependencies": {
     "react-app-rewired": "^2.2.1"

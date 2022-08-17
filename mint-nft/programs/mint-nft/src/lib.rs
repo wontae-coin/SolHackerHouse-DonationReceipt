@@ -14,7 +14,7 @@ use {
     },
 };
 
-declare_id!("HcRTmCATYGf5ZohUmL6vGJtHS5woFydQe1EGUtvEJ2YA");
+declare_id!("6cC2tJbg6QGsqu3Zau1Ekgo6RDinpVgnAcHitxobutSP");
 
 
 #[program]
