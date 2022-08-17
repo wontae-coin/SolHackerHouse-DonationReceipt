@@ -6,22 +6,23 @@ import axios from 'axios';
 
 // axios.defaults.withCredentials = true;
 
-function useGetNftUris(walletPubkey) {
+function useGetNftUris() {
     const [nftUris, setNftUris] = useState([]);
     const connection_dev = new Connection(clusterApiUrl("devnet"), 'confirmed');
     const connection_main = new Connection(clusterApiUrl("mainnet-beta"), 'confirmed');
     let connection = connection_dev;
 
-    async function getNftUris() {
+    async function getNftUris(walletPubkey) {
         let walletToQuery;
         let tokenAccounts;
 
         // Searth devnet
         try{
-            console.log('trying to searth in devnet');
+            console.log('trying to search in devnet');
             walletToQuery = new PublicKey(walletPubkey);
             tokenAccounts = await connection.getTokenAccountsByOwner(walletToQuery, { programId: SPLToken.TOKEN_PROGRAM_ID});
         }catch (err){
+            // alert("invalid account")
             console.log(err);
             let default_l_nftUris = [];
             setNftUris(default_l_nftUris);
@@ -29,21 +30,25 @@ function useGetNftUris(walletPubkey) {
         }
         
         // If not found tokenAccounts, then trying to searth in mainnet.
-        if (tokenAccounts.value.length == 0){
+        if (tokenAccounts.value.length === 0){
+            
             try{
-                console.log('trying to searth in mainnet');
+                console.log('trying to search in mainnet');
                 walletToQuery = new PublicKey(walletPubkey);
                 tokenAccounts = await connection_main.getTokenAccountsByOwner(walletToQuery, { programId: SPLToken.TOKEN_PROGRAM_ID});
                 connection = connection_main;
-            }catch (err){
+            } catch (err){
                 console.log(err);
                 let default_l_nftUris = [];
                 setNftUris(default_l_nftUris);
                 return false;
+            } finally {
+                setNftUris([])
             }
+            
         }
 
-        if (tokenAccounts.value.length == 0){
+        if (tokenAccounts.value.length === 0){
             return false;
         }
 
@@ -65,6 +70,7 @@ function useGetNftUris(walletPubkey) {
                     l_nftUris.push(imgdata);
                 }
             }catch (err){
+                
                 return false;
             }
         }
@@ -72,7 +78,7 @@ function useGetNftUris(walletPubkey) {
         const promises = tokenAccounts.value.map(getTokensUris);
         // wait until all promises are resolved
         await Promise.all(promises);
-
+        
         setNftUris(l_nftUris);
     }
     return [getNftUris, nftUris]

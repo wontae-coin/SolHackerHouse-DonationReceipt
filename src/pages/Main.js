@@ -186,33 +186,55 @@ class Orb {
 
 function Main() {
     const { publicKey, wallet, disconnect } = useWallet();
-    const [ placeholder, setPlaceholder ] = useState("");
-    useEffect( () => {
-      let addr = publicKey === null? "Connect your wallet" : publicKey.toString()
-      setPlaceholder(addr);
-      setAddress(addr)
-    }, [publicKey])
-    const ref = useRef(null);
-
-    const [show, setShow] = useState('none');
-    const [showMint, setShowMint] = useState('none');
-    const [showBack, setShowBack] = useState('none');    
-    const [address, setAddress] = useState("");
-
-    const [ getNftUris, ntfUris ] = useGetNftUris(address);
-    const [currentCard, setCurrentCard] = useState("id_card_current");
-    const [nextCard, setNextCard] = useState("id_card_next");
-    const [previousCard, setPreviousCard] = useState("id_card_previous");
-
-    const [currentInfo, setCurrentInfo] = useState("id_info_current");
-    const [nextInfo, setNextInfo] = useState("id_info_next");
-    const [previousInfo, setPreviousInfo] = useState("id_info_previous");
-
+    const [ placeholder, setPlaceholder ] = useState("Connect your wallet or input an address");
+    // disconnect일때는...?
+    
+    
+    
+    // useEffect( () => {
+      //   console.log("akwlakr:", publicKey)
+      // });
+      const ref = useRef(null);
+      
+      const [show, setShow] = useState('none');
+      const [showMint, setShowMint] = useState('none');
+      const [showBack, setShowBack] = useState('none');    
+      const [address, setAddress] = useState("");
+      
+      const [ getNftUris, ntfUris ] = useGetNftUris(address);
+      const [currentCard, setCurrentCard] = useState("id_card_current");
+      const [nextCard, setNextCard] = useState("id_card_next");
+      const [previousCard, setPreviousCard] = useState("id_card_previous");
+      
+      const [currentInfo, setCurrentInfo] = useState("id_info_current");
+      const [nextInfo, setNextInfo] = useState("id_info_next");
+      const [previousInfo, setPreviousInfo] = useState("id_info_previous");
+      
+      useEffect( () => {
+        let addr = publicKey === null ? "" : publicKey.toString()
+        
+        console.log("address:",address, "publicKey:", publicKey);
+        if (address == publicKey) console.log("같")
+        else console.log("다")
+  
+        console.log('이거도 들어와야하는거아닌가?', publicKey);
+        setPlaceholder("Connect your wallet or input an address");
+        setAddress(addr)
+      }, [publicKey])
 
     const [count, setCount] = useState(0);
     
-    const submit_btn_onClick = (address) =>{
-        getNftUris().then(() => setAddress(address)).then(function(res){
+    const submit_btn_onClick = () =>{
+        // console.log("address:", address);
+        if (!address) {
+          // let isRightAddress = confirm("Please put an adequate address.");
+          alert("Please put your address.")
+          return;
+          // event.preventDefault;
+        };
+
+
+        getNftUris(address).then(function(res){
           if (res !== false){
             document.getElementById("id_overlay").className = "overlay zoom-in"
             document.getElementById("id_overlay__inner").className = "overlay__inner fade-out"
@@ -220,9 +242,9 @@ function Main() {
             document.getElementById("id_back_button").className = "back-button fade-in"
             setShow('');
             setShowBack('');
-            setAddress("Connect your wallet")
+            setAddress("");
           }else{
-            alert("Please put your address");
+            alert("This token does not own any NFTs.");
           }
         });
         // document.getElementById("id_overlay__btn").className = "overlay__btn overlay__btn--transparent disable-object"
@@ -353,7 +375,10 @@ function Main() {
 
     return (
         <div>
-          <section className="section main">
+            <div className="button-container">
+              <WalletMultiButton/>
+            </div>
+            <section className="section main">
             <div ref={ref} className="orb-canvas container"/>
             <div className="overlay" id="id_overlay">
               <div className="overlay__inner" id="id_overlay__inner">
@@ -380,7 +405,6 @@ function Main() {
                               />
                   </div>
                   <div>
-                    <WalletMultiButton/>
                   </div>
                   <div className="overlay__btns">
                   <button id="id_overlay__btn" className="overlay__btn"
