@@ -1,7 +1,13 @@
+## Default branch
+CleanCode, where this project has to be initiated
+
 ## Project Description
 1. NFT Inquiry
 When the address is received, the service show the images of the NFTs held by that address.
 If the correct address is not entered or the address does not have an NFT, the alert popup window is displayed to warn you.
+- test address <br>
+Fq2PLUzruav37hmZSA7VSt1Er7PD9vV65gyk6MYqgSVV
+
 
 2. NFT issue(development in progress)
 When the metadata of the NFT(donor name, donor organization, date, etc.) is received on the client side, through the steps as following:  
