@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+<h1>Initiate the prototype</h1>
+1. npm install / yarn add
+2. npm run start / yarn start
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1>Project Description</h1>
+1. NFT 조회 (Read)
+주소(Pubkey)를 입력하면 해당 Pubkey가 보유한 NFT들을 이미지로서 보여줍니다.
+만약 정확한 주소를 입력하지 않았거나 해당 주소가 NFT를 가지고 있지 않은 경우에는 alert popup창을 띄워 경고합니다.
 
-## Available Scripts
+2. NFT 발행(Create), 개발 진행중
+NFT 증서 발행하는 페이지(/mint)에서 NFT 메타데이터(기부자 이름, 기부받은 기관, 날짜 등)을 입력을 받으면
+@solana/web3.js web3 Javascript API로 NFT를 발행하는 스마트 컨트랙트에 넘겨준다.
+그러면 발행주체(인증됨, 서비스 주최자) NFT를 발행하게 됩니다.
 
-In the project directory, you can run:
+NFT를 발행하는 rust 스마트 컨트랙트 프로그램은 개발 완료되었으나 메타데이터를 입력받는 클라이언트 페이지는 아직 개발중에 있습니다.
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Enviroment
+RPC URL: https://api.devnet.solana.com
+WebSocket URL: wss://api.devnet.solana.com/
+Keypair Path : Any Key.json
+## Building NFT & Deplyoing NFT Token SmartContract
+cd mint-nft
+anchor build
+anchor deploy
+* change declair_id(own ProgramId) mint-nft/program/src/lib.rs
+* change mint-nft/Anchor.toml
+* ex)
+[programs.devnet]
+mint_nft = "Program ID"
+wallet = "Key path"
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+## Miniting NFT Token (Local Side)
+cd mint-nft
+npm install
+anchor run test
+# ex)
+[programs.devnet]
+mint_nft = "Program ID"
+[provider]
+wallet = "Key path"
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+## Miniting NFT Token (Client Side)
+Upload Image to arweave (Done)
+Upload Metadata.json to arweave (Done)
+Move Local Mint RPC Code To client (Developing)
