@@ -1,7 +1,3 @@
-## Initiate the prototype</h1>
-1. npm install / yarn add <br/>
-2. npm run start / yarn start
-
 ## Project Description
 1. NFT Inquiry
 When the address is received, the service show the images of the NFTs held by that address.
@@ -14,7 +10,12 @@ When the metadata of the NFT(donor name, donor organization, date, etc.) is rece
 3. Issue NFT with the Image and metadata
 
 The smart contract program that publishes NFT has been developed, but the client page that receives metadata is still under development.
-## Enviroment
+
+## Project Installation
+1. npm install / yarn add <br/>
+2. npm run start / yarn start
+
+## On-chain Enviroment
 RPC URL: https://api.devnet.solana.com
 WebSocket URL: wss://api.devnet.solana.com/
 Keypair Path : Any Key.json
@@ -24,24 +25,27 @@ anchor build
 anchor deploy
 * change declair_id(own ProgramId) mint-nft/program/src/lib.rs
 * change mint-nft/Anchor.toml
-* ex)
-[programs.devnet]
-mint_nft = "Program ID"
-wallet = "Key path"
-[scripts]
+* ex) <br/>
+[programs.devnet] <br/>
+mint_nft = "Program ID" <br/>
+wallet = "Key path" <br/>
+[scripts] <br/>
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+
+
 ## Miniting NFT Token (Local Side)
-cd mint-nft
-npm install
+cd mint-nft <br/>
+npm install <br/>
 anchor run test
+
 # ex)
-[programs.devnet]
-mint_nft = "Program ID"
-[provider]
+[programs.devnet] <br/>
+mint_nft = "Program ID" <br/>
+[provider] <br/>
 wallet = "Key path"
-[scripts]
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+
+
 ## Miniting NFT Token (Client Side)
-Upload Image to arweave (Done)
-Upload Metadata.json to arweave (Done)
+Upload Image to arweave (Done) <br/>
+Upload Metadata.json to arweave (Done) <br/>
 Move Local Mint RPC Code To client (Developing)
