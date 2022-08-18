@@ -1,14 +1,14 @@
 import { Header } from './Header'; 
 import { Footer } from './Footer'; 
-import { Navigator } from './Navigator'; 
+import { Navigator } from './Navbar'; 
 
 function CommonLayout({children}) {
     return (
-        <div>
-            <Header/>
+        <div className='COMMONLAYOUT'>
+            {/* <Header/> */}
             <Navigator/>
                 {children}
-            <Footer/>
+            {/* <Footer/> */}
         </div>
     );
 }

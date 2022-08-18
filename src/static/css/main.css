@@ -48,15 +48,19 @@
     justify-content: space-between; */
   }
   
-  .wallet-button-container {
+  .NAVBAR {
     /* display: flex;
     justify-content: center; */
     position: absolute;
-    right : 0;
-    top: 0vh;
+    right : 1vw;
+    top: 1vh;
     z-index: 100;
+    display: flex;
+    gap: 0 1rem;
   }
   
+
+
   .orb-canvas {
     position: fixed;
     top: 0;
@@ -73,7 +77,8 @@
   }
   
   .overlay {
-    width: 100%;
+    width: 50vw;
+    height: 40vh;
     /* max-width: 1140px;
     max-height: 640px; */
     padding: 8rem 6rem;
@@ -86,7 +91,7 @@
   }
   
   .overlay__inner {
-    max-width: 36rem;
+    width: 100%;
   }
   
   .overlay__title {
@@ -145,7 +150,7 @@
   
   .overlay__btns {
     width: 100%;
-    max-width: 30rem;
+    max-width: 15rem;
     display: flex;
   }
   
@@ -458,10 +463,16 @@
       transform: scale(1, 1);
     }
   }
+  .input_btn {
+    
+  }
 
+  .search_btn {
+
+  }
 
   button {
-    /* border: none; */
+    border: none;
     background: none;
     cursor: pointer;
   }
@@ -775,7 +786,7 @@
 
   .back-button {
     position: fixed;
-    top: 50px;
+    top: 100px;
     right:100px;
     display: flex;
     fill:rgb(85, 61, 59);

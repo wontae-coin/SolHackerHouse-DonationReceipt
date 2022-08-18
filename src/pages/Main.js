@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
 import { TextField, Grid } from "@mui/material";
-import "../static/css/main.css";
 import { useGetNftUris } from "../hooks";
 import * as PIXI from "https://cdn.skypack.dev/pixi.js";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur";
@@ -367,10 +366,7 @@ function Main() {
   }, []);
 
     return (
-        <div>
-            <div className="wallet-button-container">
-              <WalletMultiButton/>
-            </div>
+        <div className="MAIN">
             <section className="section main">
             <div ref={ref} className="orb-canvas container"/>
             <div className="overlay" id="id_overlay">
@@ -380,9 +376,9 @@ function Main() {
                   <span className="text-gradient">{"\u00A0"}everyone is blessed</span>.
                   </h1>
                   <h3 className="overlay__speaker">- Maya Angelou -</h3>
-                  <p className="overlay__description">
-                  {/* <strong>Put your address</strong> */}
-                  </p>
+                  {/* <p className="overlay__description">
+                  <strong>Put your address</strong>
+                  </p> */}
                   <div className="overlay__input">
                   <TextField onChange={(val) =>{
                               // console.log(val.target.value);
@@ -394,7 +390,6 @@ function Main() {
                               variant="outlined"
                               size="small"
                               fullWidth={true}
-                              color="primary"
                               />
                   </div>
                   <div>
@@ -526,7 +521,6 @@ function Main() {
                   <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5 15.538l-3.592-3.548 3.546-3.587-1.416-1.403-3.545 3.589-3.588-3.543-1.405 1.405 3.593 3.552-3.547 3.592 1.405 1.405 3.555-3.596 3.591 3.55 1.403-1.416z"/>
                 </svg>
           </div>
-
         </div>
     );
 }

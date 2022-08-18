@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Button } from "@mui/material";
-import { Connection, clusterApiUrl, Keypair, PublicKey, Transaction, SystemProgram} from "@solana/web3.js";
-
+import { Connection } from "@solana/web3.js";
 import Arweave from 'arweave';
 import key from "../keys/arweave-keyfile.json";
-
 import * as anchor from "@project-serum/anchor";
-import { AnchorProvider, Wallet, Program, web3 } from '@project-serum/anchor'
+import { AnchorProvider } from '@project-serum/anchor'
 import mintNft from "../instruction/mint_nft.json";
+import { TextField } from "@mui/material";
 
 const opts = {
     preflightCommitment: "recent",
@@ -28,7 +27,6 @@ function Mint() {
     //console.log('wallet', wallet_base)
 
     const [metadata, setMetadata] = useState({
-        title: "Empty",
         nftTitle: "NFT TITLE",
         nftSymbol: "SYMBOL",
     })
@@ -244,27 +242,34 @@ function Mint() {
     }, [jsonUri]);
 
     return (
-        <div>
-            <div>
-                <div>
-                    <input type="text" name="title" value={metadata.title} placeholder={metadata.title} onChange={handleChange}/>
+        <div className="MINT">
+            <section className="section main">
+                <div className="overlay">
+                    <div className="overlay__inner">
+                        <h1 className="overlay__title">Metadata input</h1>
+                        <div className="overlay__input">
+                            <TextField type="text" name="nftTitle" value={metadata.nftTitle} 
+                            placeholder={metadata.nftTitle} onChange={handleChange} 
+                            size="small" fullWidth={true}/>
+                        </div>
+                        <div className="overlay__input">
+                            <TextField type="text" name="nftSymbol" value={metadata.nftSymbol}
+                            placeholder={metadata.nftSymbol} onChange={handleChange}
+                            size="small" fullWidth={true}/>
+                        </div>
+                        <div className="overlay__input">
+                            <input type="file" 
+                            accept="image/jpg, image/png, image/jpeg, image/gif"
+                            name="image" onChange={handleImageUpload}/>
+                        </div>
+                        <div className="overlay__btns">
+                            <button className="overlay__btn" variant="outlined" onClick={handleClick}>
+                                Submit
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <input type="text" name="nftTitle" value={metadata.nftTitle} placeholder={metadata.nftTitle} onChange={handleChange}/>
-                </div>
-                <div>
-                    <input type="text" name="nftSymbol" value={metadata.nftSymbol} placeholder={metadata.nftSymbol} onChange={handleChange}/>
-                </div>
-                <div>
-                    <input type="file" 
-                    accept="image/jpg, image/png, image/jpeg, image/gif"
-                    name="image" onChange={handleImageUpload}/>
-                </div>
-                <Button variant="outlined" onClick={handleClick}>Submit</Button>
-            </div>
-            <div>
-                <canvas className="img__box"></canvas>
-            </div>
+            </section>
         </div>
     );
 }
