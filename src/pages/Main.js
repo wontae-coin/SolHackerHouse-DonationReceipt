@@ -211,11 +211,6 @@ function Main() {
       useEffect( () => {
         let addr = publicKey === null ? "" : publicKey.toString()
         
-        console.log("address:",address, "publicKey:", publicKey);
-        if (address == publicKey) console.log("같")
-        else console.log("다")
-  
-        console.log('이거도 들어와야하는거아닌가?', publicKey);
         setPlaceholder("Connect your wallet or input an address");
         setAddress(addr)
       }, [publicKey])
@@ -373,7 +368,7 @@ function Main() {
 
     return (
         <div>
-            <div className="button-container">
+            <div className="wallet-button-container">
               <WalletMultiButton/>
             </div>
             <section className="section main">
