@@ -23,6 +23,11 @@ const arweave = Arweave.init({
 });
 
 function Mint() {
+
+
+
+
+
     const wallet_base = useWallet();
     //console.log('wallet', wallet_base)
 
@@ -39,13 +44,19 @@ function Mint() {
     const [buffers, setBuffer] = useState("");
     let [imageUrl, setImageUrl] = useState("");
     let [jsonUri, setJsonUri] = useState("");
+    let inputRef = useRef();
+    const [fileboxName, setFileBoxName] = useState("Select File");
+
     const handleImageUpload = ( e ) => {
         console.log("e", e);
         const {target: {files}} = e;
         const file = files[0];
         setImage(file);
+        let filename = inputRef.current.value;
+        setFileBoxName(filename)
     }
 
+    const nftImageRef = useRef();
     const handleClick = async  () => {
         // Here Is Image Uploader Part 
         //console.log(image);
@@ -56,8 +67,13 @@ function Mint() {
             let a = Buffer.from(reader.result, "base64");
             console.log(a);
             setBuffer(a)
+            nftImageRef.current.attr("src", reader.result);
+            console.log("dasd",nftImageRef.current);
+            console.log("dasd",reader.result);
+
         });
         await reader.readAsDataURL(image)
+
     }
 
     useEffect( () => {
@@ -116,18 +132,6 @@ function Mint() {
         
                 },
                 image: imageUrl,
-        
-                //// deprecated ( may not work  in a future)
-                // collection: {
-                //     name: "Test Collection",
-                //     family: "Custom NFTs",
-                //   },
-                // creators: [
-                //     {
-                //       address: "CBBUMHRmbVUck99mTCip5sHP16kzGj3QTYB8K3XxwmQx",
-                //       share: 100,
-                //     },
-                //   ],
               }
               
             
@@ -257,15 +261,25 @@ function Mint() {
                             placeholder={metadata.nftSymbol} onChange={handleChange}
                             size="small" fullWidth={true}/>
                         </div>
-                        <div className="overlay__input">
-                            <input type="file" 
-                            accept="image/jpg, image/png, image/jpeg, image/gif"
-                            name="image" onChange={handleImageUpload}/>
+                        <div className="overlay__filebox--container">
+                            <div className="overlay__filebox">
+
+                                <input className="upload-name" value={fileboxName} disabled="disabled"/>
+                                
+                                <input className="overlay__filebox--input" type="file" id="file"
+                                accept="image/jpg, image/png, image/jpeg, image/gif"
+                                name="image" onChange={handleImageUpload} ref={inputRef}/>
+                                <label id="filebox" className="overlay__filebox--label overlay__btn" htmlFor="file">Upload</label>
+
+                            </div>
+                            <div className="overlay__btns">
+                                <button className="overlay__btn" variant="outlined" onClick={handleClick}>
+                                    Submit
+                                </button>
+                            </div>
                         </div>
-                        <div className="overlay__btns">
-                            <button className="overlay__btn" variant="outlined" onClick={handleClick}>
-                                Submit
-                            </button>
+                        <div>
+                            <img className="img__box"/>
                         </div>
                     </div>
                 </div>

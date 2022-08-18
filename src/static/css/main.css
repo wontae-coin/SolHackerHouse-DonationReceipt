@@ -132,9 +132,62 @@
     max-width: 30rem;
     display: flex;
     margin-bottom: 1rem;
-    
   }
 
+  .overlay__filebox--container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem 0rem;
+  }
+  .overlay__filebox {
+    display: flex;
+    max-width: 480px;
+  }
+
+  .upload-name {
+    width: 100%;
+  }
+
+  .overlay__filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+  }
+
+  .upload-name {
+    display: inline-block;
+    padding: .5em .75em;  /* label의 패딩값과 일치 */
+    margin-right: 1rem;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  .overlay__filebox--input {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+  }
+
+  .overlay__filebox--label {
+    max-width: 5rem;
+  }
 
   .overlay_btn_mint {
     border: #000 solid 2px;
