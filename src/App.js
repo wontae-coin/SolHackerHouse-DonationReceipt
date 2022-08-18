@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Main, Receipts, Error404, Mint } from "./pages";
-import { CommonLayout } from "./components"
+import { CommonLayout } from "./layout";
 import { Routes, Route } from "react-router-dom";
 
 function App() {

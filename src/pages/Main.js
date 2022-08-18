@@ -1,7 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
 import { TextField, Grid } from "@mui/material";
-// import { Connection, GetProgramAccountsFilter } from "@solana/web3.js";
-// import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import "../static/css/main.css";
 import { useGetNftUris } from "../hooks";
 import * as PIXI from "https://cdn.skypack.dev/pixi.js";
@@ -384,7 +382,7 @@ function Main() {
               <div className="overlay__inner" id="id_overlay__inner">
                   <h1 className="overlay__title">
                   When we give cheerfully and accept gratefully, 
-                  <span className="text-gradient">everyone is blessed</span>.
+                  <span className="text-gradient">{"\u00A0"}everyone is blessed</span>.
                   </h1>
                   <h3 className="overlay__speaker">- Maya Angelou -</h3>
                   <p className="overlay__description">

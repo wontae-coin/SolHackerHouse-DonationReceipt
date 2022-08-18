@@ -2,16 +2,13 @@ import { useState, useEffect, useRef } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Button } from "@mui/material";
 import { Connection, clusterApiUrl, Keypair, PublicKey, Transaction, SystemProgram} from "@solana/web3.js";
-//import { Metaplex } from "@metaplex-foundation/js";
-
 
 import Arweave from 'arweave';
-import key from "../arweave-keyfile.json"
+import key from "../keys/arweave-keyfile.json";
 
 import * as anchor from "@project-serum/anchor";
-//import { Provider, Program, AnchorProvider, web3 } from '@project-serum/anchor'
 import { AnchorProvider, Wallet, Program, web3 } from '@project-serum/anchor'
-import mintNft from "../mint_nft.json";
+import mintNft from "../instruction/mint_nft.json";
 
 const opts = {
     preflightCommitment: "recent",
