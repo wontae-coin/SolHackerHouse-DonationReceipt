@@ -31,13 +31,6 @@ cd mint-nft
 anchor build
 anchor deploy
 * change declair_id(own ProgramId) mint-nft/program/src/lib.rs
-* change mint-nft/Anchor.toml
-* ex) <br/>
-[programs.devnet] <br/>
-mint_nft = "Program ID" <br/>
-wallet = "Key path" <br/>
-[scripts] <br/>
-test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
 
 
 
@@ -57,11 +50,11 @@ Mint NFT Token on connected wallet <br/>
 cd mint-nft <br/>
 npm install <br/>
 set metadata uri on tests/mint-nft.ts  <br/>
-anchor run test  <br/>
 
-# ex)
+change mint-nft/Anchor.toml  <br/>
+* ex) <br/>
 [programs.devnet] <br/>
 mint_nft = "Program ID" <br/>
-[provider] <br/>
-wallet = "Key path"
+wallet = "Key path" <br/>
 
+anchor run test  <br/>
